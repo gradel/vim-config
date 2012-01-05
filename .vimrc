@@ -127,6 +127,9 @@ imap <c-a> <esc>:w<cr>
 
 map <leader>sw :set wrap<cr>
 
+set switchbuf=usetab,newtab
+
+
 " buffer navigation
 map <c-n> :bn!<cr>
 map <c-b> :bp!<cr>
@@ -198,6 +201,16 @@ setlocal errorformat=%-P%f,
                     \%-G\ \ \ \ %.%#,
                     \%-GNo\ errors\ found.,
                     \%-Q
+
+" VOom: Vim commands for creating and deleting folds are not very useful and are
+"potentially dangerous when typed accidentally. They can be disabled in .vimrc
+"as follows:
+" Disable commands for creating and deleting folds.
+noremap zf <Nop>
+noremap zF <Nop>
+noremap zd <Nop>
+noremap zD <Nop>
+noremap zE <Nop>
 
 " Mappings
 "
