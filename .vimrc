@@ -212,7 +212,7 @@ noremap zd <Nop>
 noremap zD <Nop>
 noremap zE <Nop>
 
-" Mappings
+" Plugin Mappings
 "
 " Ack
 map <silent> <leader>a :exec "Ack! ".expand("<cword>")<cr>
@@ -249,8 +249,13 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+let g:utl_cfg_hdl_mt_application_pdf = ':silent !evince %p &'
+map <leader>y :Utl ol<cr>
+map <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
+map <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
 map <leader>w <c-w><c-w>
-
+inoremap <Leader>op <C-o>:Open<CR>
+nnoremap <Leader>op :Open<CR>
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/

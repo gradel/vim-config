@@ -82,4 +82,15 @@
     path = bundle/calendar
     url = https://github.com/mattn/calendar-vim.git
     ignore = dirty
-
+[submodule "bundle/vim-easytags"]
+    path = bundle/vim-easytags
+    url = https://github.com/xolox/vim-easytags.git
+    ignore = dirty
+[submodule "bundle/utl"]
+    path = bundle/utl
+    url = https://github.com/vim-scripts/utl.vim.git
+    ignore = dirty
+[submodule "bundle/gundo"]
+    path = bundle/gundo
+    url = http://github.com/sjl/gundo.vim.git
+    ignore = dirty
