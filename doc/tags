@@ -1,4 +1,15 @@
+Commands	vifm.txt	/*Commands*
+Configure	vifm.txt	/*Configure*
+Filters	vifm.txt	/*Filters*
+Marks	vifm.txt	/*Marks*
+Movement	vifm.txt	/*Movement*
+Normal	vifm.txt	/*Normal*
+Options	vifm.txt	/*Options*
+Plugin	vifm.txt	/*Plugin*
+Reserved	vifm.txt	/*Reserved*
+Vifm_Ranges	vifm.txt	/*Vifm_Ranges*
 otl2html	vo_readme.txt	/*otl2html*
+vifm.txt	vifm.txt	/*vifm.txt*
 vimoutliner	vo_readme.txt	/*vimoutliner*
 vo	vo_readme.txt	/*vo*
 vo-activities	vo_readme.txt	/*vo-activities*
