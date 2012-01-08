@@ -16,14 +16,13 @@ set autoread
 set confirm
 set scrolloff=3
 
-" set foldlevel=3
 set nu
 set showmode
 set cursorline
 set mouse=a
 set wrap
 set showmatch
-set hidden
+"set hidden
 
 " --- Indentation Options
 
@@ -56,6 +55,9 @@ set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 " automatically fold code depending on syntax highlighing
 set foldmethod=indent
 set fillchars=vert:\|,fold:\ ,diff:-
+
+set foldlevel=3
+set foldnestmax=3
 
 " ##### MOVEMENT
 
@@ -129,6 +131,7 @@ map <leader>sw :set wrap<cr>
 
 set switchbuf=usetab,newtab
 
+map ,,, <esc>:b /home/gerald/Dropbox/outline/vot.otl<cr>zM
 
 " buffer navigation
 map <c-n> :bn!<cr>
@@ -193,6 +196,9 @@ let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 let g:JSLintHighlightErrorLine = 0
 set makeprg=jsl\ -nologo\ -nofilelisting\ -nosummary\ -nocontext\ -conf\ '/etc/jsl.conf'\ -process\ %
 "set errorformat=%f(%l):\ %m
+"
+"Disable the warning that another plugin decreased updatetime
+let g:easytags_updatetime_autodisable=1
 
 setlocal makeprg=jslint\ %
 setlocal errorformat=%-P%f,
@@ -242,17 +248,29 @@ map <leader>tt :NERDTreeTabsToggle<cr>
 inoremap <silent> <F10> <C-O>:make<CR>
 map <silent> <F10> :make<CR>
 nmap <F4> :w<CR>:make<CR>:cw<CR>
+
+" for outlining
 map <space> za
-set foldnestmax=2
+
 map <c-j> <c-w>j
 map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+" fugitive TODO: make it work
+autocmd User fugitive
+ \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$'
+ \ nnoremap <buffer> .. :edit %:h<CR>
+ \ endif
+
+
+" vim-utl
 let g:utl_cfg_hdl_mt_application_pdf = ':silent !evince %p &'
 map <leader>y :Utl ol<cr>
 map <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
 map <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
+
+
 map <leader>w <c-w><c-w>
 inoremap <Leader>op <C-o>:Open<CR>
 nnoremap <Leader>op :Open<CR>
