@@ -5,9 +5,9 @@ filetype plugin indent on
 filetype plugin on
 syntax on
 
-if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-endif
+"if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
+    "set t_Co=256
+"endif
 set t_Co=256
 colorscheme wombat256i
 

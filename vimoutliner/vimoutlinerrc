@@ -18,13 +18,13 @@ let g:vo_modules_load = "checkbox"
 "User Preferences ***************************************************
 "let maplocalleader = ",,"		" this is prepended to VO key mappings
 
-"setlocal ignorecase			" searches ignore case
-"setlocal smartcase			" searches use smart case
-"setlocal wrapmargin=5
-"setlocal tw=78
-"setlocal tabstop=4			" tabstop and shiftwidth must match
-"setlocal shiftwidth=4			" values from 2 to 8 work well
-"setlocal background=dark		" for dark backgrounds
+setlocal ignorecase			" searches ignore case
+setlocal smartcase			" searches use smart case
+setlocal wrapmargin=5
+setlocal tw=78
+setlocal tabstop=4			" tabstop and shiftwidth must match
+setlocal shiftwidth=4			" values from 2 to 8 work well
+" setlocal background=dark		" for dark backgrounds
 setlocal nowrap
 
 "Hoisting ***********************************************************

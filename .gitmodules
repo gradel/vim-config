@@ -98,3 +98,7 @@
     path = bundle/vimchat
     url = https://github.com/ironcamel/vimchat.git
     ignore = dirty
+[submodule "bundle/VIP"]
+    path = bundle/VIP
+    url = https://github.com/dradtke/VIP.git
+    ignore = dirty
