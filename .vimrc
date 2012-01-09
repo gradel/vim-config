@@ -5,6 +5,12 @@ filetype plugin indent on
 filetype plugin on
 syntax on
 
+function! JustDeleteBuffer()
+    let curbuf = bufname("%")
+    exe "bp"
+    exe "bd " curbuf
+endfunction
+nmap <c-m> :call JustDeleteBuffer()<cr>
 "if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
     "set t_Co=256
 "endif
