@@ -11,11 +11,19 @@ function! JustDeleteBuffer()
     exe "bd " curbuf
 endfunction
 nmap <c-m> :call JustDeleteBuffer()<cr>
-"if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
-    "set t_Co=256
-"endif
+
+if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
+    set t_Co=256
+endif
 set t_Co=256
 colorscheme wombat256i
+
+"if ! has("gui_running")
+    "set t_Co=256
+"endif
+"" feel free to choose :set background=light for a different style
+"set background=dark
+"colors peaksea
 
 set nocompatible
 set autoread
@@ -179,6 +187,22 @@ nnoremap <C-y> 3<C-y>
 "
 " Settings
 "
+"utl
+
+" systems http client
+let g:utl_cfg_hdl_scm_http_system = "!xdg-open %u"
+" let g:utl_cfg_hdl_scm_http_system = "silent !firefox -remote 'ping()' && firefox -remote 'openURL( %u#%f )' || firefox '%u#%f' &"
+"
+" pdf handler
+let g:utl_cfg_hdl_mt_application_pdf = ':silent !evince %p &'
+
+"nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
+"nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
+" [id=utl_cfg_hdl_scm_http__wget]
+let g:utl_cfg_hdl_scm_http__wget="call Utl_if_hdl_scm_http__wget('%u')"
+"
+" mailto handler
+let g:utl_cfg_hdl_scm_mailto = "silent !thunderbird '%u' &"
 " FuzzyFinder
 let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 
@@ -198,21 +222,8 @@ let g:NERDTreeWinSize=25
 let g:ackhighlight=1
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
-" jslint
-let g:JSLintHighlightErrorLine = 0
-set makeprg=jsl\ -nologo\ -nofilelisting\ -nosummary\ -nocontext\ -conf\ '/etc/jsl.conf'\ -process\ %
-"set errorformat=%f(%l):\ %m
-"
 "Disable the warning that another plugin decreased updatetime
 let g:easytags_updatetime_autodisable=1
-
-setlocal makeprg=jslint\ %
-setlocal errorformat=%-P%f,
-                    \%-G/*jslint\ %.%#*/,
-                    \%*[\ ]%n\ %l\\,%c:\ %m,
-                    \%-G\ \ \ \ %.%#,
-                    \%-GNo\ errors\ found.,
-                    \%-Q
 
 " VOom: Vim commands for creating and deleting folds are not very useful and are
 "potentially dangerous when typed accidentally. They can be disabled in .vimrc
@@ -264,17 +275,16 @@ map <c-l> <c-w>l
 map <c-h> <c-w>h
 
 " fugitive TODO: make it work
-autocmd User fugitive
- \ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$'
- \ nnoremap <buffer> .. :edit %:h<CR>
- \ endif
+"autocmd User fugitive
+ "\ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$'
+ "\ nnoremap <buffer> .. :edit %:h<CR>
+ "\ endif
 
 
 " vim-utl
-let g:utl_cfg_hdl_mt_application_pdf = ':silent !evince %p &'
-map <leader>y :Utl ol<cr>
-map <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
-map <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
+nmap <leader>y :Utl ol<cr>
+nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
+nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
 
 
 map <leader>w <c-w><c-w>
@@ -285,8 +295,8 @@ match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
-" UTF-8 als Default-Encoding
-" set enc=utf-8
+"UTF-8 als Default-Encoding
+"set enc=utf-8
 
 if has('statusline')
     set laststatus=2
@@ -380,7 +390,7 @@ endfunction
 " - at the end of the day, we are still in insert mode,
 "   the cursor is in exactly the same spot, and the man
 "   page for php is visible
-inoremap <C-p> <C-O>:call OpenPhpFunction('<c-r><c-w>')<CR><C-O>:wincmd p<CR>
-nnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
-vnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
+"inoremap <C-p> <C-O>:call OpenPhpFunction('<c-r><c-w>')<CR><C-O>:wincmd p<CR>
+"nnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
+"vnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
 
