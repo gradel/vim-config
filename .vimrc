@@ -10,7 +10,8 @@ function! JustDeleteBuffer()
     exe "bp"
     exe "bd " curbuf
 endfunction
-nmap <c-m> :call JustDeleteBuffer()<cr>
+
+nmap <c-u> :call JustDeleteBuffer()<cr>
 
 if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
     set t_Co=256
