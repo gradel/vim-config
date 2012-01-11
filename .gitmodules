@@ -102,3 +102,7 @@
     path = bundle/VIP
     url = https://github.com/dradtke/VIP.git
     ignore = dirty
+[submodule "bundle/writebackup"]
+    path = bundle/writebackup
+    url = https://github.com/vim-scripts/writebackup.git
+    ignore = dirty

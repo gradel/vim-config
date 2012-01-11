@@ -10,7 +10,7 @@ function! JustDeleteBuffer()
     exe "bp"
     exe "bd " curbuf
 endfunction
-
+let verbose = 1
 nmap <c-u> :call JustDeleteBuffer()<cr>
 
 if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
@@ -136,7 +136,7 @@ augroup END
 
 let mapleader = ","
 
-" ##### general mappings
+" ###########################  general mappings  #################
 
 " save with strg-a
 map <c-a> <esc>:w<cr>
@@ -184,7 +184,7 @@ inoremap jk <esc>
 nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
-" ##### PLUGIN SETTINGS
+" ###########################  PLUGIN SETTINGS  #################
 "
 " Settings
 "
@@ -236,10 +236,13 @@ noremap zd <Nop>
 noremap zD <Nop>
 noremap zE <Nop>
 
-" Plugin Mappings
+" #################  Plugin Mappings  ###########################
 "
 " Ack
 map <silent> <leader>a :exec "Ack! ".expand("<cword>")<cr>
+
+" WriteBackup
+command -bar -bang W :WriteBackup<bang>
 
 " FuzzyFinder
 map <leader>fj :FufCoverageFile<cr>
