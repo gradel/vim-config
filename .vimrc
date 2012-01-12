@@ -11,7 +11,7 @@ function! JustDeleteBuffer()
     exe "bd " curbuf
 endfunction
 let verbose = 1
-nmap <c-u> :call JustDeleteBuffer()<cr>
+"nmap <c-u> :call JustDeleteBuffer()<cr>
 
 if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
     set t_Co=256
@@ -82,15 +82,15 @@ set foldnestmax=3
 set whichwrap+=h,l
 
 " add < > to chars that form pairs (see % command)
-set matchpairs+=<:>
+"set matchpairs+=<:>
 
 " Enable error files & error jumping
-set cf
+"set cf
 
 " Stop certain movements from always going to the first character of a line.
 " While this behaviour deviates from that of Vi, it does what most users
 " coming from other editors would expect.
-set nostartofline
+"set nostartofline
 
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
@@ -149,8 +149,8 @@ set switchbuf=usetab,newtab
 map ,,, <esc>:b /home/gerald/Dropbox/outline/vot.otl<cr>zM
 
 " buffer navigation
-map <c-n> :bn!<cr>
-map <c-b> :bp!<cr>
+"map <c-n> :bn<cr>
+"map <c-b> :bp<cr>
 noremap <C-left> :bprev<CR>
 noremap <C-right> :bnext<CR>
 
@@ -164,8 +164,8 @@ set wildcharm=<C-Z>
 nnoremap <F10> :b <C-Z>
 
 " while wrapping lines move screen-linewise
-nnoremap j gj
-nnoremap k gk
+"nnoremap j gj
+"nnoremap k gk
 
 " Copy Paste
 map <leader>p "+p
@@ -177,8 +177,8 @@ nnoremap <silent> <leader>h :noh<CR><C-l>
 
 " additional esc's for ins mode.
 " note: ctrl [ or ctrl c work also as esc
-inoremap kj <esc>
-inoremap jk <esc>
+"inoremap kj <esc>
+"inoremap jk <esc>
 
 " faster viewport moving
 nnoremap <C-e> 3<C-e>
@@ -209,7 +209,7 @@ let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 
 " tabman: side bar tab-and buffer-manager
 let g:tabman_width = 25
-let g:tabman_specials = 1
+"let g:tabman_specials = 1
 
 " buftabs: inobtrusive tab-like buffer switching
 let g:buftabs_only_basename=1
@@ -239,7 +239,7 @@ noremap zE <Nop>
 " #################  Plugin Mappings  ###########################
 "
 " Ack
-map <silent> <leader>a :exec "Ack! ".expand("<cword>")<cr>
+map <leader>a :exec "Ack! ".expand("<cword>")<cr>
 
 " WriteBackup
 command -bar -bang W :WriteBackup<bang>

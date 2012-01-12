@@ -106,3 +106,6 @@
     path = bundle/writebackup
     url = https://github.com/vim-scripts/writebackup.git
     ignore = dirty
+[submodule "bundle/vim-bufsurf"]
+	path = bundle/vim-bufsurf
+	url = https://github.com/ton/vim-bufsurf.git
