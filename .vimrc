@@ -1,7 +1,58 @@
-filetyp off
-call pathogen#infect()
-call pathogen#helptags()
-filetype plugin indent on
+set nocompatible               " be iMproved
+filetype off                   " required!
+
+set rtp+=~/.vim/bundle/vundle/
+call vundle#rc()
+
+" let Vundle manage Vundle
+" required!
+Bundle 'gmarik/vundle'
+
+" My Bundles here:
+"
+" original repos on github
+Bundle 'tpope/vim-fugitive'
+Bundle 'ton/vim-bufsurf'
+Bundle 'vim-scripts/AutoComplPop'
+Bundle 'vim-scripts/FuzzyFinder'
+Bundle 'vim-scripts/L9'
+Bundle 'vim-scripts/The-NERD-Commenter'
+Bundle 'vim-scripts/TaskList.vim'
+Bundle 'vim-scripts/VOoM'
+Bundle 'mileszs/ack.vim'
+Bundle 'vim-scripts/buftabs'
+Bundle 'hallettj/jslint.vim'
+Bundle 'scrooloose/nerdtree'
+Bundle 'jistr/vim-nerdtree-tabs'
+Bundle 'klen/python-mode'
+Bundle 'ervandew/supertab'
+Bundle 'scrooloose/syntastic'
+Bundle 'kien/tabman.vim'
+Bundle 'vim-scripts/taglist.vim'
+Bundle 'xolox/vim-shell'
+Bundle 'jpalardy/vim-slime'
+Bundle 'mattn/calendar-vim'
+Bundle 'xolox/vim-easytags'
+Bundle 'vim-scripts/utl.vim'
+Bundle 'sjl/gundo.vim'
+Bundle 'ironcamel/vimchat'
+Bundle 'dradtke/VIP'
+Bundle 'vim-scripts/writebackup'
+Bundle 'mattn/zencoding-vim'
+
+filetype plugin indent on     " required!
+
+"
+" Brief help
+" :BundleList          - list configured bundles
+" :BundleInstall(!)    - install(update) bundles
+" :BundleSearch(!) foo - search(or refresh cache first) for foo
+" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
+"
+" see :h vundle for more details or wiki for FAQ
+" NOTE: comments after Bundle command are not allowed..
+"
+
 filetype plugin on
 syntax on
 
@@ -406,4 +457,3 @@ endfunction
 "inoremap <C-p> <C-O>:call OpenPhpFunction('<c-r><c-w>')<CR><C-O>:wincmd p<CR>
 "nnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
 "vnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
-
