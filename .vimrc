@@ -290,7 +290,7 @@ let g:ackhighlight=1
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
 "Disable the warning that another plugin decreased updatetime
-"let g:easytags_updatetime_autodisable=1
+let g:easytags_updatetime_autodisable=1
 
 " VOom: Vim commands for creating and deleting folds are not very useful and are
 "potentially dangerous when typed accidentally. They can be disabled in .vimrc
