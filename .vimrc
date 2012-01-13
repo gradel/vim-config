@@ -5,19 +5,25 @@ filetype plugin indent on
 filetype plugin on
 syntax on
 
+let mapleader = ","
+
 function! JustDeleteBuffer()
     let curbuf = bufname("%")
     exe "bp"
     exe "bd " curbuf
 endfunction
-let verbose = 1
-"nmap <c-u> :call JustDeleteBuffer()<cr>
+
+"let verbose = 1
+
+map <leader>q :call JustDeleteBuffer()<cr>
 
 if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
     set t_Co=256
+    "colorscheme wombat256i
 endif
 set t_Co=256
-colorscheme wombat256i
+
+colorscheme darkblue
 
 "if ! has("gui_running")
     "set t_Co=256
@@ -26,6 +32,8 @@ colorscheme wombat256i
 "set background=dark
 "colors peaksea
 
+let python_highlight_all = 1
+
 set nocompatible
 set autoread
 set confirm
@@ -33,7 +41,7 @@ set scrolloff=3
 
 set nu
 set showmode
-set cursorline
+"set cursorline
 set mouse=a
 set wrap
 set showmatch
@@ -79,7 +87,7 @@ set foldnestmax=3
 " --- General Movement
 
 " backspace and cursor can go lines up or down
-set whichwrap+=h,l
+"set whichwrap+=h,l
 
 " add < > to chars that form pairs (see % command)
 "set matchpairs+=<:>
@@ -134,13 +142,40 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
-let mapleader = ","
+" ###########################  mappings  #################
 
-" ###########################  general mappings  #################
+" buffer navigation
+map <silent> <c-u> :BufSurfBack<cr>
+map <silent> <c-i> :BufSurfForward<cr>
+map <silent> <leader>j :BufSurfBack<cr>
+map <silent> <leader>k :BufSurfForward<cr>
+noremap <C-left> :bprev<CR>
+noremap <C-right> :bnext<CR>
+
+nnoremap <F5> :buffers<CR>:buffer<Space>
+
+command -nargs=? -bang  BB  if <q-args> != '' | exe 'buffer '.<q-args> | else | ls<bang> | let buffer_nn=input('Which one: ') | if buffer_nn != '' | exe buffer_nn != 0 ? 'buffer '.buffer_nn : 'enew' | endif | endif
+
+" window navigation
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+map <c-l> <c-w>l
+map <c-h> <c-w>h
+
+map <leader>w <c-w><c-w>
+
+" vim-utl
+nmap <leader>y :Utl ol<cr>
+nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
+nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
+
+
+inoremap <Leader>o <C-o>:Open<CR>
+nnoremap <Leader>o :Open<CR>
 
 " save with strg-a
 map <c-a> <esc>:w<cr>
-imap <c-a> <esc>:w<cr>
+imap <c-a> <esc>:w<cr>i
 
 map <leader>sw :set wrap<cr>
 
@@ -148,15 +183,46 @@ set switchbuf=usetab,newtab
 
 map ,,, <esc>:b /home/gerald/Dropbox/outline/vot.otl<cr>zM
 
-" buffer navigation
-"map <c-n> :bn<cr>
-"map <c-b> :bp<cr>
-noremap <C-left> :bprev<CR>
-noremap <C-right> :bnext<CR>
+" Ack
+map <leader>a :exec "Ack! ".expand("<cword>")<cr>
 
-nnoremap <F5> :buffers<CR>:buffer<Space>
+" WriteBackup
+command -bar -bang W :WriteBackup<bang>
 
-command -nargs=? -bang  Buffer  if <q-args> != '' | exe 'buffer '.<q-args> | else | ls<bang> | let buffer_nn=input('Which one: ') | if buffer_nn != '' | exe buffer_nn != 0 ? 'buffer '.buffer_nn : 'enew' | endif | endif
+" FuzzyFinder
+map <leader>fj :FufCoverageFile<cr>
+map <leader>ff :FufFile<cr>
+map <leader>fc :FufFileWithCurrentBufferDir<cr>
+map <leader>fh :FufHelp<cr>
+map <leader>fb :FufBuffer<cr>
+map <leader>fd :FufDir<cr>
+map <leader>ft :FufTag<cr>
+map <leader>fa :FufBufferTagAll<cr>
+
+" TagList
+map <leader>tl :TlistToggle<CR>
+
+"TaskList
+map <leader>td <Plug>TaskList
+
+" NerdTree and NerdTreeTabs
+map <leader>nt :NERDTreeMirrorToggle<cr>
+map <leader>tt :NERDTreeTabsToggle<cr>
+
+" jslint
+" make F10 call make for linting etc.
+"inoremap <silent> <F10> <C-O>:make<CR>
+"map <silent> <F10> :make<CR>
+"nmap <F4> :w<CR>:make<CR>:cw<CR>
+
+" for outlining
+map <space> za
+
+" fugitive TODO: make it work
+"autocmd User fugitive
+ "\ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$'
+ "\ nnoremap <buffer> .. :edit %:h<CR>
+ "\ endif
 
 set wildchar=<Tab> wildmenu wildmode=full
 
@@ -209,7 +275,7 @@ let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 
 " tabman: side bar tab-and buffer-manager
 let g:tabman_width = 25
-"let g:tabman_specials = 1
+let g:tabman_specials = 0
 
 " buftabs: inobtrusive tab-like buffer switching
 let g:buftabs_only_basename=1
@@ -224,7 +290,7 @@ let g:ackhighlight=1
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
 "Disable the warning that another plugin decreased updatetime
-let g:easytags_updatetime_autodisable=1
+"let g:easytags_updatetime_autodisable=1
 
 " VOom: Vim commands for creating and deleting folds are not very useful and are
 "potentially dangerous when typed accidentally. They can be disabled in .vimrc
@@ -236,64 +302,6 @@ noremap zd <Nop>
 noremap zD <Nop>
 noremap zE <Nop>
 
-" #################  Plugin Mappings  ###########################
-"
-" Ack
-map <leader>a :exec "Ack! ".expand("<cword>")<cr>
-
-" WriteBackup
-command -bar -bang W :WriteBackup<bang>
-
-" FuzzyFinder
-map <leader>fj :FufCoverageFile<cr>
-map <leader>ff :FufFile<cr>
-map <leader>fc :FufFileWithCurrentBufferDir<cr>
-map <leader>fh :FufHelp<cr>
-map <leader>fb :FufBuffer<cr>
-map <leader>fd :FufDir<cr>
-map <leader>ft :FufTag<cr>
-map <leader>fa :FufBufferTagAll<cr>
-
-" TagList
-map <leader>tl :TlistToggle<CR>
-
-"TaskList
-map <leader>td <Plug>TaskList
-
-" NerdTree and NerdTreeTabs
-map <leader>nt :NERDTreeMirrorToggle<cr>
-map <leader>tt :NERDTreeTabsToggle<cr>
-
-" jslint
-" make F10 call make for linting etc.
-inoremap <silent> <F10> <C-O>:make<CR>
-map <silent> <F10> :make<CR>
-nmap <F4> :w<CR>:make<CR>:cw<CR>
-
-" for outlining
-map <space> za
-
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
-
-" fugitive TODO: make it work
-"autocmd User fugitive
- "\ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$'
- "\ nnoremap <buffer> .. :edit %:h<CR>
- "\ endif
-
-
-" vim-utl
-nmap <leader>y :Utl ol<cr>
-nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
-nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
-
-
-map <leader>w <c-w><c-w>
-inoremap <Leader>op <C-o>:Open<CR>
-nnoremap <Leader>op :Open<CR>
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/
@@ -323,7 +331,8 @@ endif
 
 let pymode_rope_vim_completion=1
 let pymode_rope_extended_complete=1
-let pymode_options_other=0
+"let pymode_options_other=0
+
 
 function! OpenPhpFunction (keyword)
   let proc_keyword = substitute(a:keyword , '_', '-', 'g')
