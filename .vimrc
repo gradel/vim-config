@@ -13,7 +13,7 @@ Bundle 'gmarik/vundle'
 " original repos on github
 Bundle 'tpope/vim-fugitive'
 Bundle 'ton/vim-bufsurf'
-Bundle 'vim-scripts/AutoComplPop'
+"Bundle 'vim-scripts/AutoComplPop'
 Bundle 'vim-scripts/FuzzyFinder'
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/The-NERD-Commenter'
@@ -39,6 +39,13 @@ Bundle 'ironcamel/vimchat'
 Bundle 'dradtke/VIP'
 Bundle 'vim-scripts/writebackup'
 Bundle 'mattn/zencoding-vim'
+Bundle 'gregsexton/MatchTag'
+Bundle 'itspriddle/vim-jquery'
+Bundle 'jmcantrell/vim-virtualenv'
+"Bundle 'vim-scripts/pythonhelper'  not working possibly due to other plugins
+Bundle 'vim-scripts/dbext.vim'
+Bundle 'vim-scripts/compview'
+Bundle 'gregsexton/gitv'
 
 filetype plugin indent on     " required!
 
@@ -52,14 +59,15 @@ filetype plugin indent on     " required!
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
 "
+let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=taxi173:dbname=vimdb'
 
 filetype plugin on
-syntax on
-
+syntax enable
+set title
 let mapleader = ","
 
 function! JustDeleteBuffer()
-    let curbuf = bufname("%")
+    let curbuf = bufnr("%")
     exe "bp"
     exe "bd " curbuf
 endfunction
@@ -102,16 +110,14 @@ set showmatch
 
 " never change tabstop from default(8), only change shiftwidth and
 " softtabstop!
+set softtabstop=4
+set shiftwidth=4
 
 " Attempt to determine the type of a file based on its name and possibly its
 " contents.  Use this to allow intelligent auto-indenting for each filetype,
 " and for plugins that are filetype specific
 set autoindent
 set smartindent
-
-" same (Spaces feel like Tabs)
-set softtabstop=4
-set shiftwidth=4
 
 " Tab converted to spaces
 set expandtab
@@ -225,8 +231,8 @@ inoremap <Leader>o <C-o>:Open<CR>
 nnoremap <Leader>o :Open<CR>
 
 " save with strg-a
-map <c-a> <esc>:w<cr>
-imap <c-a> <esc>:w<cr>i
+imap <c-a> <esc>:w<cr>
+nmap <c-a> :w<cr>
 
 map <leader>sw :set wrap<cr>
 
@@ -269,11 +275,11 @@ map <leader>tt :NERDTreeTabsToggle<cr>
 " for outlining
 map <space> za
 
-" fugitive TODO: make it work
-"autocmd User fugitive
- "\ if fugitive#buffer().type() =~# '^\%(tree\|blob\)$'
- "\ nnoremap <buffer> .. :edit %:h<CR>
- "\ endif
+" fugitive
+if has ("autocmd")
+autocmd User fugitive if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnoremap <buffer> <leader>u :edit %:h<CR> endif
+"autocmd BufReadPost fugitive://* set bufhidden=delete
+endif
 
 set wildchar=<Tab> wildmenu wildmode=full
 
@@ -281,8 +287,8 @@ set wildcharm=<C-Z>
 nnoremap <F10> :b <C-Z>
 
 " while wrapping lines move screen-linewise
-"nnoremap j gj
-"nnoremap k gk
+nnoremap j gj
+nnoremap k gk
 
 " Copy Paste
 map <leader>p "+p
@@ -296,10 +302,6 @@ nnoremap <silent> <leader>h :noh<CR><C-l>
 " note: ctrl [ or ctrl c work also as esc
 "inoremap kj <esc>
 "inoremap jk <esc>
-
-" faster viewport moving
-nnoremap <C-e> 3<C-e>
-nnoremap <C-y> 3<C-y>
 
 " ###########################  PLUGIN SETTINGS  #################
 "
@@ -367,9 +369,9 @@ if has('statusline')
     set statusline=%<%f\   " Filename
     set statusline+=%w%h%m%r " Options
     set statusline+=\ [%{&ff}/%Y]            " filetype
-"     set statusline+=%{fugitive#statusline()} "  Git Hotness
+    set statusline+=%{fugitive#statusline()} "  Git Hotness
     set statusline+=\ [%{getcwd()}]          " current dir
-"set statusline+=\ [A=\%03.3b/H=\%02.2B] " ASCII / Hexadecimal value of char
+    set statusline+=\ [A=\%03.3b/H=\%02.2B] " ASCII / Hexadecimal value of char
     set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
 endif
 
