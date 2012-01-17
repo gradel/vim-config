@@ -1,30 +1,27 @@
 colorscheme darkblue
 
+set lines=999
+set columns=999
+
 "When the GUI starts, t_vb is reset to its default value.
 "Reassert that no flash or beep is wanted.
-"set visualbell t_vb=
+set visualbell t_vb=
 
-" no menu/toolbar
-set guioptions-=m
+" no toolbar
 set guioptions-=T
+set guioptions-=r
 
-" FOLDING
-"set foldmethod=syntax
-"highlight folded guibg=purple4 guifg=white
+" Disable all blinking:
+:set guicursor+=a:blinkon0
+" Remove previous setting:
+":set guicursor-=a:blinkon0
+" Restore default setting:
+":set guicursor&
 
-" color background of current line
-"set cursorline
-"set cursorcolumn
+set cursorline
 " change it to a color fitting to your theme :)
-"highlight cursorline guibg=black
-"highlight cursorcolumn guibg=black
-
-"Color Visual Text Selection
-"highlight Visual guibg=steelblue guifg=white
-
-"au InsertEnter * hi iCursor guifg=black guibg=red
-"au InsertLeave * hi Cursor guifg=black guibg=green
+highlight cursorline guibg=black
 
 "highlight statusline guibg=black guifg=grey
-"au InsertEnter * hi statusline guibg=darkred
-"au InsertLeave * hi statusline guibg=black
+au InsertEnter * hi statusline guibg=darkred
+au InsertLeave * hi statusline guibg=black

@@ -1,8 +1,10 @@
 set nocompatible               " be iMproved
-filetype off                   " required!
+filetype off                   " required until end of vundle section
 
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
+
+" ###### VUNDLE ######
 
 " let Vundle manage Vundle
 " required!
@@ -16,40 +18,41 @@ Bundle 'ton/vim-bufsurf'
 "Bundle 'vim-scripts/AutoComplPop'
 Bundle 'vim-scripts/FuzzyFinder'
 Bundle 'vim-scripts/L9'
+Bundle 'vim-scripts/mru.vim'
 Bundle 'vim-scripts/The-NERD-Commenter'
 Bundle 'vim-scripts/TaskList.vim'
 Bundle 'vim-scripts/VOoM'
-Bundle 'mileszs/ack.vim'
+Bundle 'vim-scripts/dbext.vim'
+Bundle 'vim-scripts/compview'
+Bundle 'vim-scripts/writebackup'
+Bundle 'vim-scripts/utl.vim'
+Bundle 'vim-scripts/taglist.vim'
 Bundle 'vim-scripts/buftabs'
+Bundle 'mileszs/ack.vim'
 Bundle 'hallettj/jslint.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'klen/python-mode'
+Bundle 'kien/rainbow_parentheses.vim'
+Bundle 'kien/tabman.vim'
 Bundle 'ervandew/supertab'
 Bundle 'scrooloose/syntastic'
-Bundle 'kien/tabman.vim'
-Bundle 'vim-scripts/taglist.vim'
 Bundle 'xolox/vim-shell'
 Bundle 'jpalardy/vim-slime'
 Bundle 'mattn/calendar-vim'
 Bundle 'xolox/vim-easytags'
-Bundle 'vim-scripts/utl.vim'
 Bundle 'sjl/gundo.vim'
 Bundle 'ironcamel/vimchat'
 Bundle 'dradtke/VIP'
-Bundle 'vim-scripts/writebackup'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/MatchTag'
 Bundle 'itspriddle/vim-jquery'
 Bundle 'jmcantrell/vim-virtualenv'
 "Bundle 'vim-scripts/pythonhelper'  not working possibly due to other plugins
-Bundle 'vim-scripts/dbext.vim'
-Bundle 'vim-scripts/compview'
 Bundle 'gregsexton/gitv'
 
 filetype plugin indent on     " required!
 
-"
 " Brief help
 " :BundleList          - list configured bundles
 " :BundleInstall(!)    - install(update) bundles
@@ -59,54 +62,80 @@ filetype plugin indent on     " required!
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed..
 "
-let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=taxi173:dbname=vimdb'
+"let verbose = 1
+"set hidden
+"set cursorline
+"UTF-8 als Default-Encoding
+set enc=utf-8
 
+" ###### GENERAL SETTINGS ######
+"
 filetype plugin on
 syntax enable
 set title
+set nocompatible
+set autoread
+set confirm
+set scrolloff=3
+set nu
+set showmode
+set mouse=a
+set wrap
+set showmatch
+
 let mapleader = ","
-
-function! JustDeleteBuffer()
-    let curbuf = bufnr("%")
-    exe "bp"
-    exe "bd " curbuf
-endfunction
-
-"let verbose = 1
-
-map <leader>q :call JustDeleteBuffer()<cr>
 
 if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
     set t_Co=256
     "colorscheme wombat256i
 endif
 set t_Co=256
+colorscheme django
 
-colorscheme darkblue
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
-"if ! has("gui_running")
-    "set t_Co=256
-"endif
-"" feel free to choose :set background=light for a different style
-"set background=dark
-"colors peaksea
+if has('statusline')
+    set laststatus=2
+" Broken down into easily includeable segments
+    set statusline=%<%f\   " Filename
+    set statusline+=%w%h%m%r " Options
+    set statusline+=\ [%{&ff}/%Y]            " filetype
+    set statusline+=%{fugitive#statusline()} "  Git Hotness
+    set statusline+=\ [%{getcwd()}]          " current dir
+    set statusline+=\ [A=\%03.3b/H=\%02.2B] " ASCII / Hexadecimal value of char
+    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
+endif
 
-let python_highlight_all = 1
+if has('cmdline_info')
+    set ruler                   " show the ruler
+    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
+    set showcmd                 " show partial commands in status line and
+                                " selected characters/lines in visual mode
+endif
 
-set nocompatible
-set autoread
-set confirm
-set scrolloff=3
+" ###### PERSISTENT UNDO ######
+"
+set undodir=~/.vim/undodir
+set undofile
+set undolevels=1000 "maximum number of changes that can be undone
+set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+" ----------------------------------------------------------------------------
 
-set nu
-set showmode
-"set cursorline
-set mouse=a
-set wrap
-set showmatch
-"set hidden
+" don't know why, but deleting a buffer deletes vim
+"
+function! JustDeleteBuffer()
+    let curbuf = bufnr("%")
+    exe "bp"
+    exe "bd " curbuf
+endfunction
 
-" --- Indentation Options
+map <leader>q :call JustDeleteBuffer()<cr>
+" ----------------------------------------
+
+"  ###### INDENTATION AND TAB OPTIONS ######
 
 " never change tabstop from default(8), only change shiftwidth and
 " softtabstop!
@@ -127,7 +156,7 @@ set shiftround
 
 set smarttab
 
-" --- Folding Options
+" ###### FOLDING OPTIONS ######
 
 " These commands open folds
 set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
@@ -138,8 +167,9 @@ set fillchars=vert:\|,fold:\ ,diff:-
 
 set foldlevel=3
 set foldnestmax=3
+set foldcolumn=2
 
-" ##### MOVEMENT
+" ###### MOVEMENT ######
 
 " --- General Movement
 
@@ -147,7 +177,7 @@ set foldnestmax=3
 "set whichwrap+=h,l
 
 " add < > to chars that form pairs (see % command)
-"set matchpairs+=<:>
+set matchpairs+=<:>
 
 " Enable error files & error jumping
 "set cf
@@ -155,13 +185,13 @@ set foldnestmax=3
 " Stop certain movements from always going to the first character of a line.
 " While this behaviour deviates from that of Vi, it does what most users
 " coming from other editors would expect.
-"set nostartofline
+set nostartofline
 
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
 
-" --- Search Options
-
+" ###### SEARCH OPTIONS
+"
 " Highlight searches
 set hlsearch
 
@@ -171,7 +201,7 @@ set smartcase
 
 set incsearch
 
-" ##### COMPLETION
+" ###### COMPLETION ######
 
 " Better command-line completion
 set wildmenu
@@ -185,6 +215,7 @@ set completeopt=menu,longest,preview
 " set completeopt=menuone,longest,preview
 " au FileType python set omnifunc=pythoncomplete#Complete
 " let g:SuperTabDefaultCompletionType = \"context\"
+" -------------------------------------------------------
 
 " jump to last cursor position when opening files
 function! ResCur()
@@ -198,14 +229,22 @@ augroup resCur
   autocmd!
   autocmd BufWinEnter * call ResCur()
 augroup END
+" -----------------------------------
 
-" ###########################  mappings  #################
+let python_highlight_all = 1
 
-" buffer navigation
+" When vimrc is edited, reload it
+autocmd! bufwritepost vimrc source ~/.vimrc
+
+" ######  MAPPINGS  ######
+
+" buf-surf
 map <silent> <c-u> :BufSurfBack<cr>
 map <silent> <c-i> :BufSurfForward<cr>
 map <silent> <leader>j :BufSurfBack<cr>
 map <silent> <leader>k :BufSurfForward<cr>
+" ----------------------------------------
+
 noremap <C-left> :bprev<CR>
 noremap <C-right> :bnext<CR>
 
@@ -303,12 +342,13 @@ nnoremap <silent> <leader>h :noh<CR><C-l>
 "inoremap kj <esc>
 "inoremap jk <esc>
 
-" ###########################  PLUGIN SETTINGS  #################
+" ############  PLUGIN SETTINGS  ############
 "
-" Settings
-"
-"utl
+" ###### dbext ######
+let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=taxi173:dbname=vimdb'
 
+" ###### utl ######
+"
 " systems http client
 let g:utl_cfg_hdl_scm_http_system = "!xdg-open %u"
 " let g:utl_cfg_hdl_scm_http_system = "silent !firefox -remote 'ping()' && firefox -remote 'openURL( %u#%f )' || firefox '%u#%f' &"
@@ -323,31 +363,39 @@ let g:utl_cfg_hdl_scm_http__wget="call Utl_if_hdl_scm_http__wget('%u')"
 "
 " mailto handler
 let g:utl_cfg_hdl_scm_mailto = "silent !thunderbird '%u' &"
-" FuzzyFinder
+"
+" ###### FuzzyFinder ######
+"
 let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 
-" tabman: side bar tab-and buffer-manager
+" ###### tabman: side bar tab-and buffer-manager ######
+"
 let g:tabman_width = 25
-let g:tabman_specials = 0
+let g:tabman_specials = 1
 
-" buftabs: inobtrusive tab-like buffer switching
+" ###### buftabs: inobtrusive tab-like buffer switching ######
+"
 let g:buftabs_only_basename=1
 
+" ###### NerdTree ######
+"
+let g:NERDTreeWinSize=25
 let g:nerdtree_tabs_open_on_console_startup = 1
 
-" NerdTree
-let g:NERDTreeWinSize=25
-
-" Ack
+" ###### Ack ######
+"
 let g:ackhighlight=1
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
-"Disable the warning that another plugin decreased updatetime
+" ###### easy-tags ######
+"
+" Disable the warning that another plugin decreased updatetime
 let g:easytags_updatetime_autodisable=1
 
-" VOom: Vim commands for creating and deleting folds are not very useful and are
-"potentially dangerous when typed accidentally. They can be disabled in .vimrc
-"as follows:
+" ###### VOom ######
+"
+" Vim commands for creating and deleting folds are not very useful and are
+"potentially dangerous when typed accidentally.
 " Disable commands for creating and deleting folds.
 noremap zf <Nop>
 noremap zF <Nop>
@@ -355,38 +403,17 @@ noremap zd <Nop>
 noremap zD <Nop>
 noremap zE <Nop>
 
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
-
-"UTF-8 als Default-Encoding
-"set enc=utf-8
-
-if has('statusline')
-    set laststatus=2
-" Broken down into easily includeable segments
-    set statusline=%<%f\   " Filename
-    set statusline+=%w%h%m%r " Options
-    set statusline+=\ [%{&ff}/%Y]            " filetype
-    set statusline+=%{fugitive#statusline()} "  Git Hotness
-    set statusline+=\ [%{getcwd()}]          " current dir
-    set statusline+=\ [A=\%03.3b/H=\%02.2B] " ASCII / Hexadecimal value of char
-    set statusline+=%=%-14.(%l,%c%V%)\ %p%%  " Right aligned file nav info
-endif
-
-if has('cmdline_info')
-    set ruler                   " show the ruler
-    set rulerformat=%30(%=\:b%n%y%m%r%w\ %l,%c%V\ %P%) " a ruler on steroids
-    set showcmd                 " show partial commands in status line and
-                                " selected characters/lines in visual mode
-endif
-
+" ###### pymode - Rope ######
+"
 let pymode_rope_vim_completion=1
 let pymode_rope_extended_complete=1
 "let pymode_options_other=0
 
+" ############ END PLUGINS ############
+"
 
+" ###### php Plugin ######
+"
 function! OpenPhpFunction (keyword)
   let proc_keyword = substitute(a:keyword , '_', '-', 'g')
   " create new preview split or switch to existing.
