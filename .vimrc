@@ -28,6 +28,7 @@ Bundle 'vim-scripts/writebackup'
 Bundle 'vim-scripts/utl.vim'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'vim-scripts/buftabs'
+Bundle 'vim-scripts/DirDiff.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'hallettj/jslint.vim'
 Bundle 'scrooloose/nerdtree'
@@ -408,6 +409,12 @@ noremap zE <Nop>
 let pymode_rope_vim_completion=1
 let pymode_rope_extended_complete=1
 "let pymode_options_other=0
+
+" ###### DirDiff ######
+"
+let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp"
+let g:DirDiffIgnore = "Id:,Revision:,Date:"
+
 
 " ############ END PLUGINS ############
 "
