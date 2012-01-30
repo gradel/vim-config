@@ -215,7 +215,7 @@ set complete=.,w,b,t,i
 set completeopt=menu,longest,preview
 autocmd FileType python setlocal omnifunc=pysmell#Complete
 " au FileType python set omnifunc=pythoncomplete#Complete
-let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+let g:SuperTabDefaultCompletionType = "context"
 " -------------------------------------------------------
 
 " jump to last cursor position when opening files
