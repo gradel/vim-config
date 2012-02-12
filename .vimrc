@@ -15,7 +15,7 @@ Bundle 'gmarik/vundle'
 " original repos on github
 Bundle 'tpope/vim-fugitive'
 Bundle 'ton/vim-bufsurf'
-"Bundle 'vim-scripts/AutoComplPop'
+Bundle 'vim-scripts/AutoComplPop'
 Bundle 'vim-scripts/FuzzyFinder'
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/mru.vim'
@@ -210,12 +210,12 @@ set wildignore+=*.pyc,*.zip,*.gz,*.bz,*.tar,*.jpg,*.png,*.gif,*.avi,*.wmv,*.ogg,
 set wildmode=list:longest
 
 " Completion settings in insertmode
-set complete=.,w,b,t,i
+" set complete=.,w,b,t,i
 " TODO
 set completeopt=menu,longest,preview
-autocmd FileType python setlocal omnifunc=pysmell#Complete
-" au FileType python set omnifunc=pythoncomplete#Complete
-let g:SuperTabDefaultCompletionType = "context"
+" autocmd FileType python setlocal omnifunc=pysmell#Complete
+au FileType python set omnifunc=pythoncomplete#Complete
+" let g:SuperTabDefaultCompletionType = "context"
 " -------------------------------------------------------
 
 " jump to last cursor position when opening files
@@ -347,6 +347,7 @@ nnoremap <silent> <leader>h :noh<CR><C-l>
 "
 " ###### dbext ######
 let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=taxi173:dbname=vimdb'
+let g:dbext_default_profile_psql_payment = 'type=PGSQL:user=gerald:passwd=taxi173:dbname=payment'
 
 " ###### utl ######
 "
