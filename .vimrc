@@ -259,7 +259,7 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
-map <leader>w <c-w><c-w>
+map <leader>w :set wrap<CR>
 
 " vim-utl
 nmap <leader>y :Utl ol<cr>
