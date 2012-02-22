@@ -13,22 +13,24 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 "
 " original repos on github
+Bundle 'vim-scripts/Conque-Shell'
+Bundle 'xolox/vim-pyref'
 Bundle 'tpope/vim-fugitive'
-Bundle 'ton/vim-bufsurf'
+"Bundle 'ton/vim-bufsurf'
 Bundle 'vim-scripts/AutoComplPop'
-Bundle 'vim-scripts/FuzzyFinder'
+"Bundle 'vim-scripts/FuzzyFinder'
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/mru.vim'
 Bundle 'vim-scripts/The-NERD-Commenter'
 Bundle 'vim-scripts/TaskList.vim'
-Bundle 'vim-scripts/VOoM'
+"Bundle 'vim-scripts/VOoM'
 Bundle 'vim-scripts/dbext.vim'
 Bundle 'vim-scripts/compview'
 Bundle 'vim-scripts/writebackup'
 Bundle 'vim-scripts/utl.vim'
 Bundle 'vim-scripts/taglist.vim'
 Bundle 'vim-scripts/buftabs'
-Bundle 'vim-scripts/DirDiff.vim'
+"Bundle 'vim-scripts/DirDiff.vim'
 Bundle 'mileszs/ack.vim'
 Bundle 'hallettj/jslint.vim'
 Bundle 'scrooloose/nerdtree'
@@ -39,18 +41,18 @@ Bundle 'kien/tabman.vim'
 Bundle 'ervandew/supertab'
 Bundle 'scrooloose/syntastic'
 Bundle 'xolox/vim-shell'
-Bundle 'jpalardy/vim-slime'
+"Bundle 'jpalardy/vim-slime'
 Bundle 'mattn/calendar-vim'
-Bundle 'xolox/vim-easytags'
+"Bundle 'xolox/vim-easytags'
 Bundle 'sjl/gundo.vim'
-Bundle 'ironcamel/vimchat'
-Bundle 'dradtke/VIP'
+"Bundle 'ironcamel/vimchat'
+"Bundle 'dradtke/VIP'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/MatchTag'
 Bundle 'itspriddle/vim-jquery'
-Bundle 'jmcantrell/vim-virtualenv'
+"Bundle 'jmcantrell/vim-virtualenv'
 "Bundle 'vim-scripts/pythonhelper'  not working possibly due to other plugins
-Bundle 'gregsexton/gitv'
+"Bundle 'gregsexton/gitv'
 
 filetype plugin indent on     " required!
 
@@ -88,15 +90,15 @@ let mapleader = ","
 
 if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
     set t_Co=256
-    "colorscheme wombat256i
+    colorscheme wombat256i
 endif
 set t_Co=256
-colorscheme django
+colorscheme koehler
 
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
-autocmd BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/
-autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+"highlight ExtraWhitespace ctermbg=red guibg=red
+"match ExtraWhitespace /\s\+$/
+"autocmd BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/
+"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
 if has('statusline')
     set laststatus=2
@@ -119,10 +121,10 @@ endif
 
 " ###### PERSISTENT UNDO ######
 "
-set undodir=~/Dropbox/undodir
-set undofile
-set undolevels=1000 "maximum number of changes that can be undone
-set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+"set undodir=~/Dropbox/undodir
+"set undofile
+"set undolevels=1000 "maximum number of changes that can be undone
+"set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 " ----------------------------------------------------------------------------
 
 " don't know why, but deleting a buffer deletes vim
@@ -210,12 +212,12 @@ set wildignore+=*.pyc,*.zip,*.gz,*.bz,*.tar,*.jpg,*.png,*.gif,*.avi,*.wmv,*.ogg,
 set wildmode=list:longest
 
 " Completion settings in insertmode
-" set complete=.,w,b,t,i
+set complete=.,w,b,t,i
 " TODO
 set completeopt=menu,longest,preview
 " autocmd FileType python setlocal omnifunc=pysmell#Complete
-au FileType python set omnifunc=pythoncomplete#Complete
-" let g:SuperTabDefaultCompletionType = "context"
+" au FileType python set omnifunc=pythoncomplete#Complete
+let g:SuperTabDefaultCompletionType = "context"
 " -------------------------------------------------------
 
 " jump to last cursor position when opening files
@@ -232,7 +234,7 @@ augroup resCur
 augroup END
 " -----------------------------------
 
-let python_highlight_all = 1
+"let python_highlight_all = 1
 
 " When vimrc is edited, reload it
 autocmd! bufwritepost vimrc source ~/.vimrc
@@ -240,10 +242,10 @@ autocmd! bufwritepost vimrc source ~/.vimrc
 " ######  MAPPINGS  ######
 
 " buf-surf
-map <silent> <c-u> :BufSurfBack<cr>
-map <silent> <c-i> :BufSurfForward<cr>
-map <silent> <leader>j :BufSurfBack<cr>
-map <silent> <leader>k :BufSurfForward<cr>
+"map <silent> <c-u> :BufSurfBack<cr>
+"map <silent> <c-i> :BufSurfForward<cr>
+"map <silent> <leader>j :BufSurfBack<cr>
+"map <silent> <leader>k :BufSurfForward<cr>
 " ----------------------------------------
 
 noremap <C-left> :bprev<CR>
@@ -259,7 +261,7 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
-map <leader>w :set wrap<CR>
+"map <leader>w <c-w><c-w>
 
 " vim-utl
 nmap <leader>y :Utl ol<cr>
@@ -274,9 +276,9 @@ nnoremap <Leader>o :Open<CR>
 imap <c-a> <esc>:w<cr>
 nmap <c-a> :w<cr>
 
-map <leader>sw :set wrap<cr>
+map <leader>w :set wrap<cr>
 
-set switchbuf=usetab,newtab
+"set switchbuf=usetab,newtab
 
 map ,,, <esc>:b /home/gerald/Dropbox/outline/vot.otl<cr>zM
 
@@ -287,14 +289,14 @@ map <leader>a :exec "Ack! ".expand("<cword>")<cr>
 command -bar -bang W :WriteBackup<bang>
 
 " FuzzyFinder
-map <leader>fj :FufCoverageFile<cr>
-map <leader>ff :FufFile<cr>
-map <leader>fc :FufFileWithCurrentBufferDir<cr>
-map <leader>fh :FufHelp<cr>
-map <leader>fb :FufBuffer<cr>
-map <leader>fd :FufDir<cr>
-map <leader>ft :FufTag<cr>
-map <leader>fa :FufBufferTagAll<cr>
+"map <leader>fj :FufCoverageFile<cr>
+"map <leader>ff :FufFile<cr>
+"map <leader>fc :FufFileWithCurrentBufferDir<cr>
+"map <leader>fh :FufHelp<cr>
+"map <leader>fb :FufBuffer<cr>
+"map <leader>fd :FufDir<cr>
+"map <leader>ft :FufTag<cr>
+"map <leader>fa :FufBufferTagAll<cr>
 
 " TagList
 map <leader>tl :TlistToggle<CR>
@@ -347,7 +349,12 @@ nnoremap <silent> <leader>h :noh<CR><C-l>
 "
 " ###### dbext ######
 let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=taxi173:dbname=vimdb'
-let g:dbext_default_profile_psql_payment = 'type=PGSQL:user=gerald:passwd=taxi173:dbname=payment'
+
+" ####### ConqueTerm ############
+let g:ConqueTerm_Color = 2
+let g:ConqueTerm_CWInsert = 1
+let g:ConqueTerm_ExecFileKey = '<F4>'
+let g:ConqueTerm_SendFileKey = '<F6>'
 
 " ###### utl ######
 "
@@ -368,12 +375,12 @@ let g:utl_cfg_hdl_scm_mailto = "silent !thunderbird '%u' &"
 "
 " ###### FuzzyFinder ######
 "
-let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
+"let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
 
 " ###### tabman: side bar tab-and buffer-manager ######
 "
-let g:tabman_width = 25
-let g:tabman_specials = 1
+"let g:tabman_width = 25
+"let g:tabman_specials = 1
 
 " ###### buftabs: inobtrusive tab-like buffer switching ######
 "
@@ -392,7 +399,7 @@ let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 " ###### easy-tags ######
 "
 " Disable the warning that another plugin decreased updatetime
-let g:easytags_updatetime_autodisable=1
+"let g:easytags_updatetime_autodisable=1
 
 " ###### VOom ######
 "
@@ -413,8 +420,8 @@ let pymode_rope_extended_complete=1
 
 " ###### DirDiff ######
 "
-let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp"
-let g:DirDiffIgnore = "Id:,Revision:,Date:"
+"let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp"
+"let g:DirDiffIgnore = "Id:,Revision:,Date:"
 
 
 " ############ END PLUGINS ############

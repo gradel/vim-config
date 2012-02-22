@@ -1,4 +1,4 @@
-colorscheme darkblue
+"colorscheme darkblue
 set guifont=Ubuntu\ Mono\ 13
 "When the GUI starts, t_vb is reset to its default value.
 "Reassert that no flash or beep is wanted.
