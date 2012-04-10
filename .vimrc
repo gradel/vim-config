@@ -16,6 +16,7 @@ Bundle 'gmarik/vundle'
 Bundle 'vim-scripts/Conque-Shell'
 Bundle 'xolox/vim-pyref'
 Bundle 'tpope/vim-fugitive'
+Bundle 'tpope/vim-unimpaired'
 "Bundle 'ton/vim-bufsurf'
 Bundle 'vim-scripts/AutoComplPop'
 "Bundle 'vim-scripts/FuzzyFinder'
@@ -46,7 +47,7 @@ Bundle 'mattn/calendar-vim'
 "Bundle 'xolox/vim-easytags'
 Bundle 'sjl/gundo.vim'
 "Bundle 'ironcamel/vimchat'
-"Bundle 'dradtke/VIP'
+Bundle 'dradtke/VIP'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/MatchTag'
 Bundle 'itspriddle/vim-jquery'
@@ -162,7 +163,7 @@ set smarttab
 " ###### FOLDING OPTIONS ######
 
 " These commands open folds
-set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
+"set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
 " automatically fold code depending on syntax highlighing
 set foldmethod=indent
@@ -269,7 +270,7 @@ nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
 nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
 
 
-inoremap <Leader>o <C-o>:Open<CR>
+"inoremap <Leader>o <C-o>:Open<CR>
 nnoremap <Leader>o :Open<CR>
 
 " save with strg-a
@@ -319,7 +320,7 @@ map <space> za
 
 " fugitive
 if has ("autocmd")
-autocmd User fugitive if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnoremap <buffer> <leader>u :edit %:h<CR> endif
+autocmd User fugitive if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnoremap <buffer> .. :edit %:h<CR> endif
 "autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
 
@@ -337,7 +338,7 @@ map <leader>p "+p
 cmap <leader>p <C-R>+
 vnoremap <leader>y "+y
 
-" disable search highlighting till next search
+" disable search highlighting til next search
 nnoremap <silent> <leader>h :noh<CR><C-l>
 
 " additional esc's for ins mode.
