@@ -54,11 +54,6 @@
 "# 
 "#########################################################################
 
-" could not get that working as backup ('file content changed: cannot read...'
-"setlocal undodir=~/.vim/undodir
-"setlocal undofile
-"setlocal undolevels=1000
-"setlocal undoreload=10000
 
 " Load the plugin {{{1
 " Prevent the plugin from being loaded twice

@@ -33,7 +33,7 @@ Bundle 'vim-scripts/taglist.vim'
 Bundle 'vim-scripts/buftabs'
 "Bundle 'vim-scripts/DirDiff.vim'
 Bundle 'mileszs/ack.vim'
-Bundle 'hallettj/jslint.vim'
+"Bundle 'hallettj/jslint.vim'
 Bundle 'msanders/snipmate.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
@@ -95,12 +95,12 @@ if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
     colorscheme wombat256i
 endif
 set t_Co=256
-colorscheme koehler
+colorscheme murphy 
 
-"highlight ExtraWhitespace ctermbg=red guibg=red
-"match ExtraWhitespace /\s\+$/
-"autocmd BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/
-"autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
+autocmd BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/
+autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
 if has('statusline')
     set laststatus=2
@@ -391,7 +391,7 @@ let g:buftabs_only_basename=1
 " ###### NerdTree ######
 "
 let g:NERDTreeWinSize=25
-let g:nerdtree_tabs_open_on_console_startup = 1
+let g:nerdtree_tabs_open_on_gui_startup = 0  
 
 " ###### Ack ######
 "
@@ -416,9 +416,10 @@ noremap zE <Nop>
 
 " ###### pymode - Rope ######
 "
-let pymode_rope_vim_completion=1
-let pymode_rope_extended_complete=1
-"let pymode_options_other=0
+"let pymode_rope_vim_completion=1
+"let pymode_rope_extended_complete=1
+"let pymode_lint = 0
+"let pymode_lint_write = 0
 
 " ###### DirDiff ######
 "
@@ -503,3 +504,4 @@ endfunction
 inoremap <C-p> <C-O>:call OpenPhpFunction('<c-r><c-w>')<CR><C-O>:wincmd p<CR>
 nnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
 vnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
+syntax on
