@@ -5,8 +5,8 @@ set guifont=Ubuntu\ Mono\ 13
 set visualbell t_vb=
 
 " no toolbar
-set guioptions-=T
-set guioptions-=r
+"set guioptions-=T
+"set guioptions-=r
 
 " Disable all blinking:
 :set guicursor+=a:blinkon0
