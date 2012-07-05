@@ -13,51 +13,52 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 "
 " original repos on github
-Bundle 'ivanov/vim-ipython'
+Bundle 'majutsushi/tagbar'
 Bundle 'suan/vim-instant-markdown'
-"Bundle 'vim-scripts/ZoomWin'
-"Bundle 'vim-scripts/Conque-Shell'
 Bundle 'xolox/vim-pyref'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-unimpaired'
-"Bundle 'ton/vim-bufsurf'
-Bundle 'vim-scripts/AutoComplPop'
-"Bundle 'vim-scripts/FuzzyFinder'
 Bundle 'vim-scripts/L9'
 Bundle 'vim-scripts/mru.vim'
 Bundle 'vim-scripts/The-NERD-Commenter'
 Bundle 'vim-scripts/TaskList.vim'
-"Bundle 'vim-scripts/VOoM'
-"Bundle 'vim-scripts/dbext.vim'
 Bundle 'vim-scripts/compview'
 Bundle 'vim-scripts/writebackup'
 Bundle 'vim-scripts/utl.vim'
-Bundle 'vim-scripts/taglist.vim'
 Bundle 'vim-scripts/buftabs'
-"Bundle 'vim-scripts/DirDiff.vim'
 Bundle 'mileszs/ack.vim'
-"Bundle 'hallettj/jslint.vim'
 Bundle 'msanders/snipmate.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'jistr/vim-nerdtree-tabs'
-"Bundle 'klen/python-mode'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'kien/tabman.vim'
-Bundle 'ervandew/supertab'
 Bundle 'xolox/vim-shell'
-"Bundle 'jpalardy/vim-slime'
-"Bundle 'mattn/calendar-vim'
-"Bundle 'xolox/vim-easytags'
 Bundle 'sjl/gundo.vim'
-"Bundle 'ironcamel/vimchat'
 Bundle 'dradtke/VIP'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/MatchTag'
 Bundle 'itspriddle/vim-jquery'
+Bundle 'ervandew/supertab'
+"Bundle 'vim-scripts/taglist.vim'
+"Bundle 'ivanov/vim-ipython'
 "Bundle 'jmcantrell/vim-virtualenv'
+"Bundle 'vim-scripts/AutoComplPop'
+"Bundle 'jpalardy/vim-slime'
+"Bundle 'ironcamel/vimchat'
+"Bundle 'mattn/calendar-vim'
+"Bundle 'xolox/vim-easytags'
+"Bundle 'ton/vim-bufsurf'
+"Bundle 'vim-scripts/DirDiff.vim'
+"Bundle 'klen/python-mode'
+"Bundle 'vim-scripts/FuzzyFinder'
+"Bundle 'hallettj/jslint.vim'
+"Bundle 'vim-scripts/dbext.vim'
+"Bundle 'vim-scripts/Conque-Shell'
 "Bundle 'vim-scripts/pythonhelper'  not working possibly due to other plugins
+"Bundle 'vim-scripts/VOoM'
 "Bundle 'gregsexton/gitv'
+"Bundle 'vim-scripts/ZoomWin'
 
 filetype plugin indent on     " required!
 
@@ -99,6 +100,12 @@ if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
 endif
 set t_Co=256
 colorscheme murphy 
+
+nmap <c-s> :w<CR>
+imap <c-s> <Esc>:w<CR>a
+imap <c-s> <Esc><c-s>
+
+nmap <c-q> :q<CR>
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -239,7 +246,7 @@ augroup resCur
 augroup END
 " -----------------------------------
 
-"let python_highlight_all = 1
+let python_highlight_all = 1
 
 " When vimrc is edited, reload it
 autocmd! bufwritepost vimrc source ~/.vimrc
@@ -277,10 +284,6 @@ nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
 "inoremap <Leader>o <C-o>:Open<CR>
 nnoremap <Leader>o :Open<CR>
 
-" save with strg-a
-imap <c-a> <esc>:w<cr>
-nmap <c-a> :w<cr>
-
 map <leader>w :set wrap<cr>
 
 "set switchbuf=usetab,newtab
@@ -304,7 +307,7 @@ command -bar -bang W :WriteBackup<bang>
 "map <leader>fa :FufBufferTagAll<cr>
 
 " TagList
-map <leader>tl :TlistToggle<CR>
+map <leader>tl :TagbarToggle<CR>
 
 "TaskList
 map <leader>td <Plug>TaskList
