@@ -88,43 +88,8 @@ endfunction
 
 function! s:DefPython()
 python << PYTHONEOF
-import sys, tokenize, cStringIO, types, os
+import sys, tokenize, cStringIO, types
 from token import NAME, DEDENT, NEWLINE, STRING
-
-''' Path-hacking for django by SKYL '''
-
-parent = os.path.split( os.getcwd() )[0]
-gparent = os.path.split( parent )[0]
-
-sys.path.append( os.getcwd() )
-sys.path.append( parent )
-sys.path.append( gparent )
-
-try:
-    # if you have django installed, and a settings.py in your CWD,
-    # the parent or the grandparent,
-    # you can use those project settings
-    import settings
-    import django.core.management
-    django.core.management.setup_environ(settings)
-
-    #print 'got Django settings', settings.__file__
-
-except ImportError:
-    # if you have pinax in your env, you can use the social_project
-    # settings
-    try:
-        from pinax.projects.social_project import settings
-	import django.core.management
-        django.core.management.setup_environ(settings)
-
-	#print 'got Django settings', settings.__file__
-
-    except ImportError:
-	pass
-
-''' END PATH HACKING '''
-
 
 debugstmts=[]
 def dbg(s): debugstmts.append(s)
@@ -652,9 +617,7 @@ def _sanitize(str):
             val += c
     return val
 
-
 sys.path.extend(['.','..'])
-
 PYTHONEOF
 endfunction
 

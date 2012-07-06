@@ -13,6 +13,10 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 "
 " original repos on github
+"Bundle 'lambdalisue/vim-django-support'
+Bundle 'mitechie/pyflakes-pathogen'
+Bundle 'sontek/rope-vim'
+Bundle 'docunext/closetag.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'suan/vim-instant-markdown'
 Bundle 'xolox/vim-pyref'
@@ -40,6 +44,7 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/MatchTag'
 Bundle 'itspriddle/vim-jquery'
 Bundle 'ervandew/supertab'
+"Bundle 'klen/python-mode'
 "Bundle 'vim-scripts/taglist.vim'
 "Bundle 'ivanov/vim-ipython'
 "Bundle 'jmcantrell/vim-virtualenv'
@@ -50,7 +55,6 @@ Bundle 'ervandew/supertab'
 "Bundle 'xolox/vim-easytags'
 "Bundle 'ton/vim-bufsurf'
 "Bundle 'vim-scripts/DirDiff.vim'
-"Bundle 'klen/python-mode'
 "Bundle 'vim-scripts/FuzzyFinder'
 "Bundle 'hallettj/jslint.vim'
 "Bundle 'vim-scripts/dbext.vim'
@@ -76,6 +80,57 @@ filetype plugin indent on     " required!
 "set cursorline
 "UTF-8 als Default-Encoding
 set enc=utf-8
+
+" Completion settings in insertmode
+set complete=.,w,b,t,i
+" TODO
+set completeopt=menuone,longest,preview
+" autocmd FileType python setlocal omnifunc=pysmell#Complete
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+let g:SuperTabDefaultCompletionType = "context"
+set pumheight=12
+" -------------------------------------------------------
+
+" ##### ropevim #####
+" Rope AutoComplete
+"source /usr/local/share/vim/plugin/ropevim.vim
+let ropevim_vim_completion=1
+let ropevim_extended_complete=1
+let g:ropevim_autoimport_modules = ["os.*","traceback","django.*", "xml.etree"]
+
+imap <c-space> <C-R>=RopeCodeAssistInsertMode()<CR>
+imap <Nul> <C-R>=RopeCodeAssistInsertMode()<CR>
+
+" Jump to the definition of whatever the cursor is on
+map <leader>j :RopeGotoDefinition<CR>
+
+" Rename whatever the cursor is on (including references to it)
+map <leader>r :RopeRename<CR>
+
+" open/close the quickfix window
+nmap <leader>c :copen<CR>
+nmap <leader>cc :cclose<CR>
+
+" close preview window automatically when we move around
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
+let g:tagbar_autoshowtag = 1
+autocmd FileType * nested :call tagbar#autoopen(0)
+
+" ==========================================================
+" Javascript
+" ==========================================================
+au BufRead *.js set makeprg=jslint\ %
+
+" Use tab to scroll through autocomplete menus
+"autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
+"autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
+
+let g:acp_completeoptPreview=1
+
+" Don't let pyflakes use the quickfix window
+let g:pyflakes_use_quickfix = 0
 
 " ###### GENERAL SETTINGS ######
 "
@@ -223,14 +278,6 @@ set wildmenu
 set wildignore+=*.pyc,*.zip,*.gz,*.bz,*.tar,*.jpg,*.png,*.gif,*.avi,*.wmv,*.ogg,*.mp3,*.mov
 set wildmode=list:longest
 
-" Completion settings in insertmode
-set complete=.,w,b,t,i
-" TODO
-set completeopt=menu,longest,preview
-" autocmd FileType python setlocal omnifunc=pysmell#Complete
-" au FileType python set omnifunc=pythoncomplete#Complete
-let g:SuperTabDefaultCompletionType = "context"
-" -------------------------------------------------------
 
 " jump to last cursor position when opening files
 function! ResCur()
@@ -273,6 +320,10 @@ map <c-k> <c-w>k
 map <c-l> <c-w>l
 map <c-h> <c-w>h
 
+" and lets make these all work in insert mode too ( <C-O> makes next cmd
+" happen as if in command mode )
+imap <C-W> <C-O><C-W>
+
 "map <leader>w <c-w><c-w>
 
 " vim-utl
@@ -294,7 +345,7 @@ map ,,, <esc>:b /home/gerald/Dropbox/outline/vot.otl<cr>zM
 map <leader>a :exec "Ack! ".expand("<cword>")<cr>
 
 " WriteBackup
-command -bar -bang W :WriteBackup<bang>
+"command -bar -bang W :WriteBackup<bang>
 
 " FuzzyFinder
 "map <leader>fj :FufCoverageFile<cr>
@@ -356,13 +407,13 @@ nnoremap <silent> <leader>h :noh<CR><C-l>
 " ############  PLUGIN SETTINGS  ############
 "
 " ###### dbext ######
-let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=taxi173:dbname=vimdb'
+"let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=taxi173:dbname=vimdb'
 
 " ####### ConqueTerm ############
-let g:ConqueTerm_Color = 2
-let g:ConqueTerm_CWInsert = 1
-let g:ConqueTerm_ExecFileKey = '<F4>'
-let g:ConqueTerm_SendFileKey = '<F6>'
+"let g:ConqueTerm_Color = 2
+"let g:ConqueTerm_CWInsert = 1
+"let g:ConqueTerm_ExecFileKey = '<F4>'
+"let g:ConqueTerm_SendFileKey = '<F6>'
 
 " ###### utl ######
 "
@@ -422,6 +473,7 @@ noremap zE <Nop>
 
 " ###### pymode - Rope ######
 "
+"let g:pymode_lint_checker = "pep8,mccabe"
 "let pymode_rope_vim_completion=1
 "let pymode_rope_extended_complete=1
 "let pymode_lint = 0
@@ -511,3 +563,20 @@ inoremap <C-p> <C-O>:call OpenPhpFunction('<c-r><c-w>')<CR><C-O>:wincmd p<CR>
 nnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
 vnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
 syntax on
+
+" Add the virtualenv's site-packages to vim path
+py << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    sys.path.insert(0, project_base_dir)
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+" Load up virtualenv's vimrc if it exists
+if filereadable($VIRTUAL_ENV . '/.vimrc')
+    source $VIRTUAL_ENV/.vimrc
+endif
