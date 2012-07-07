@@ -14,8 +14,11 @@ Bundle 'gmarik/vundle'
 "
 " original repos on github
 "Bundle 'lambdalisue/vim-django-support'
-Bundle 'mitechie/pyflakes-pathogen'
-Bundle 'sontek/rope-vim'
+Bundle "MarcWeber/vim-addon-mw-utils"
+Bundle "tomtom/tlib_vim"
+Bundle "snipmate-snippets"
+Bundle "honza/snipmate-snippets"
+Bundle "garbas/vim-snipmate"
 Bundle 'docunext/closetag.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'suan/vim-instant-markdown'
@@ -31,7 +34,7 @@ Bundle 'vim-scripts/writebackup'
 Bundle 'vim-scripts/utl.vim'
 Bundle 'vim-scripts/buftabs'
 Bundle 'mileszs/ack.vim'
-Bundle 'msanders/snipmate.vim'
+"Bundle 'msanders/snipmate.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'jistr/vim-nerdtree-tabs'
@@ -43,8 +46,9 @@ Bundle 'dradtke/VIP'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/MatchTag'
 Bundle 'itspriddle/vim-jquery'
-Bundle 'ervandew/supertab'
-"Bundle 'klen/python-mode'
+Bundle 'klen/python-mode'
+"Bundle 'ervandew/supertab'
+"Bundle 'sontek/rope-vim'
 "Bundle 'vim-scripts/taglist.vim'
 "Bundle 'ivanov/vim-ipython'
 "Bundle 'jmcantrell/vim-virtualenv'
@@ -73,7 +77,7 @@ filetype plugin indent on     " required!
 " :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
 "
 " see :h vundle for more details or wiki for FAQ
-" NOTE: comments after Bundle command are not allowed..
+" NOTE: comments after Bundle command are not allowed.
 "
 "let verbose = 1
 "set hidden
@@ -87,19 +91,15 @@ set complete=.,w,b,t,i
 set completeopt=menuone,longest,preview
 " autocmd FileType python setlocal omnifunc=pysmell#Complete
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
-let g:SuperTabDefaultCompletionType = "context"
 set pumheight=12
 " -------------------------------------------------------
 
 " ##### ropevim #####
 " Rope AutoComplete
-"source /usr/local/share/vim/plugin/ropevim.vim
-let ropevim_vim_completion=1
+"let ropevim_vim_completion=1
 let ropevim_extended_complete=1
+let g:pymode_rope_always_show_complete_menu = 1
 let g:ropevim_autoimport_modules = ["os.*","traceback","django.*", "xml.etree"]
-
-imap <c-space> <C-R>=RopeCodeAssistInsertMode()<CR>
-imap <Nul> <C-R>=RopeCodeAssistInsertMode()<CR>
 
 " Jump to the definition of whatever the cursor is on
 map <leader>j :RopeGotoDefinition<CR>
@@ -107,15 +107,16 @@ map <leader>j :RopeGotoDefinition<CR>
 " Rename whatever the cursor is on (including references to it)
 map <leader>r :RopeRename<CR>
 
-" open/close the quickfix window
-nmap <leader>c :copen<CR>
-nmap <leader>cc :cclose<CR>
+" open/close the quickfix window (not working!)
+nmap <leader>f :copen<CR>
+nmap <leader>fc :cclose<CR>
 
 " close preview window automatically when we move around
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+"autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 let g:tagbar_autoshowtag = 1
+let g:tagbar_width = 30
 autocmd FileType * nested :call tagbar#autoopen(0)
 
 " ==========================================================
@@ -123,14 +124,12 @@ autocmd FileType * nested :call tagbar#autoopen(0)
 " ==========================================================
 au BufRead *.js set makeprg=jslint\ %
 
-" Use tab to scroll through autocomplete menus
+" Use tab to scroll through autocomplete menus ---- this prevents snipmate to
+" work
 "autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
 "autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
 
 let g:acp_completeoptPreview=1
-
-" Don't let pyflakes use the quickfix window
-let g:pyflakes_use_quickfix = 0
 
 " ###### GENERAL SETTINGS ######
 "
@@ -315,16 +314,14 @@ nnoremap <F5> :buffers<CR>:buffer<Space>
 command -nargs=? -bang  BB  if <q-args> != '' | exe 'buffer '.<q-args> | else | ls<bang> | let buffer_nn=input('Which one: ') | if buffer_nn != '' | exe buffer_nn != 0 ? 'buffer '.buffer_nn : 'enew' | endif | endif
 
 " window navigation
-map <c-j> <c-w>j
-map <c-k> <c-w>k
-map <c-l> <c-w>l
-map <c-h> <c-w>h
+map <c-j> <C-W>j
+map <c-k> <C-W>k
+map <c-l> <C-W>l
+map <c-h> <C-W>h
 
 " and lets make these all work in insert mode too ( <C-O> makes next cmd
-" happen as if in command mode )
-imap <C-W> <C-O><C-W>
-
-"map <leader>w <c-w><c-w>
+" happen as if in command mode ) not working!
+"imap <C-W> <C-O><C-W>
 
 " vim-utl
 nmap <leader>y :Utl ol<cr>
@@ -448,7 +445,7 @@ let g:buftabs_only_basename=1
 " ###### NerdTree ######
 "
 let g:NERDTreeWinSize=25
-let g:nerdtree_tabs_open_on_gui_startup = 0  
+let g:nerdtree_tabs_open_on_gui_startup = 1
 
 " ###### Ack ######
 "
@@ -559,9 +556,9 @@ endfunction
 " - at the end of the day, we are still in insert mode,
 "   the cursor is in exactly the same spot, and the man
 "   page for php is visible
-inoremap <C-p> <C-O>:call OpenPhpFunction('<c-r><c-w>')<CR><C-O>:wincmd p<CR>
-nnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
-vnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
+"inoremap <C-p> <C-O>:call OpenPhpFunction('<c-r><c-w>')<CR><C-O>:wincmd p<CR>
+"nnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
+"vnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
 syntax on
 
 " Add the virtualenv's site-packages to vim path
