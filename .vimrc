@@ -47,6 +47,8 @@ Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/MatchTag'
 Bundle 'itspriddle/vim-jquery'
 Bundle 'klen/python-mode'
+Bundle 'kchmck/vim-coffee-script'
+let g:pymode_lint_cwindow = 1
 "Bundle 'ervandew/supertab'
 "Bundle 'sontek/rope-vim'
 "Bundle 'vim-scripts/taglist.vim'
@@ -94,6 +96,8 @@ set completeopt=menuone,longest,preview
 set pumheight=12
 " -------------------------------------------------------
 
+au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+
 " ##### ropevim #####
 " Rope AutoComplete
 "let ropevim_vim_completion=1
@@ -129,6 +133,13 @@ au BufRead *.js set makeprg=jslint\ %
 "autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
 "autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
 
+" Easy switch between windows
+nmap <tab><tab> <C-w>w
+
+" Reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
+
 let g:acp_completeoptPreview=1
 
 " ###### GENERAL SETTINGS ######
@@ -150,10 +161,10 @@ let mapleader = ","
 
 if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
     set t_Co=256
-    colorscheme wombat256i
+    "colorscheme wombat256i
 endif
 set t_Co=256
-colorscheme murphy 
+colorscheme blackboard
 
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>a
