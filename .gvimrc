@@ -1,12 +1,11 @@
-"colorscheme darkblue
 set guifont=Ubuntu\ Mono\ 13
 "When the GUI starts, t_vb is reset to its default value.
 "Reassert that no flash or beep is wanted.
 set visualbell t_vb=
 
 " no toolbar
-"set guioptions-=T
-"set guioptions-=r
+set guioptions-=T
+set guioptions-=r
 
 " Disable all blinking:
 :set guicursor+=a:blinkon0

@@ -14,6 +14,7 @@ Bundle 'gmarik/vundle'
 "
 " original repos on github
 "Bundle 'lambdalisue/vim-django-support'
+Bundle 'pbrisbin/html-template-syntax'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
 Bundle "snipmate-snippets"
@@ -34,7 +35,6 @@ Bundle 'vim-scripts/writebackup'
 Bundle 'vim-scripts/utl.vim'
 Bundle 'vim-scripts/buftabs'
 Bundle 'mileszs/ack.vim'
-"Bundle 'msanders/snipmate.vim'
 Bundle 'scrooloose/nerdtree'
 Bundle 'scrooloose/syntastic'
 Bundle 'jistr/vim-nerdtree-tabs'
@@ -48,25 +48,10 @@ Bundle 'gregsexton/MatchTag'
 Bundle 'itspriddle/vim-jquery'
 Bundle 'klen/python-mode'
 Bundle 'kchmck/vim-coffee-script'
-let g:pymode_lint_cwindow = 1
 "Bundle 'ervandew/supertab'
-"Bundle 'sontek/rope-vim'
-"Bundle 'vim-scripts/taglist.vim'
 "Bundle 'ivanov/vim-ipython'
-"Bundle 'jmcantrell/vim-virtualenv'
 "Bundle 'vim-scripts/AutoComplPop'
-"Bundle 'jpalardy/vim-slime'
-"Bundle 'ironcamel/vimchat'
-"Bundle 'mattn/calendar-vim'
-"Bundle 'xolox/vim-easytags'
-"Bundle 'ton/vim-bufsurf'
-"Bundle 'vim-scripts/DirDiff.vim'
-"Bundle 'vim-scripts/FuzzyFinder'
-"Bundle 'hallettj/jslint.vim'
-"Bundle 'vim-scripts/dbext.vim'
 "Bundle 'vim-scripts/Conque-Shell'
-"Bundle 'vim-scripts/pythonhelper'  not working possibly due to other plugins
-"Bundle 'vim-scripts/VOoM'
 "Bundle 'gregsexton/gitv'
 "Bundle 'vim-scripts/ZoomWin'
 
@@ -82,8 +67,7 @@ filetype plugin indent on     " required!
 " NOTE: comments after Bundle command are not allowed.
 "
 "let verbose = 1
-"set hidden
-"set cursorline
+set hidden
 "UTF-8 als Default-Encoding
 set enc=utf-8
 
@@ -91,19 +75,19 @@ set enc=utf-8
 set complete=.,w,b,t,i
 " TODO
 set completeopt=menuone,longest,preview
-" autocmd FileType python setlocal omnifunc=pysmell#Complete
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
 set pumheight=12
 " -------------------------------------------------------
 
-au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
-
 " ##### ropevim #####
+
 " Rope AutoComplete
 "let ropevim_vim_completion=1
 let ropevim_extended_complete=1
 let g:pymode_rope_always_show_complete_menu = 1
 let g:ropevim_autoimport_modules = ["os.*","traceback","django.*", "xml.etree"]
+
+let g:pymode_lint_cwindow = 1
 
 " Jump to the definition of whatever the cursor is on
 map <leader>j :RopeGotoDefinition<CR>
@@ -119,9 +103,11 @@ nmap <leader>fc :cclose<CR>
 "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
+" ##### tagbar #####
+
 let g:tagbar_autoshowtag = 1
 let g:tagbar_width = 30
-autocmd FileType * nested :call tagbar#autoopen(0)
+"autocmd FileType * nested :call tagbar#autoopen(0)
 
 " ==========================================================
 " Javascript
@@ -133,12 +119,13 @@ au BufRead *.js set makeprg=jslint\ %
 "autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
 "autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
 
-" Easy switch between windows
-nmap <tab><tab> <C-w>w
+" ##### coffeescript #####
 
-" Reselect visual block after indent/outdent
-vnoremap < <gv
-vnoremap > >gv
+au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
+
+" compile on save
+au BufWritePost *.coffee silent CoffeeMake!
+
 
 let g:acp_completeoptPreview=1
 
@@ -252,6 +239,25 @@ set foldcolumn=2
 " ###### MOVEMENT ######
 
 " --- General Movement
+" Easy switch between windows
+nmap <tab><tab> <C-w>w
+
+" Reselect visual block after indent/outdent
+vnoremap < <gv
+vnoremap > >gv
+
+" jump to last cursor position when opening files
+function! ResCur()
+  if line("'\"") <= line("$")
+    normal! g`"
+    return 1
+  endif
+endfunction
+
+augroup resCur
+  autocmd!
+  autocmd BufWinEnter * call ResCur()
+augroup END
 
 " backspace and cursor can go lines up or down
 "set whichwrap+=h,l
@@ -278,7 +284,6 @@ set hlsearch
 " Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
-
 set incsearch
 
 " ###### COMPLETION ######
@@ -289,33 +294,12 @@ set wildignore+=*.pyc,*.zip,*.gz,*.bz,*.tar,*.jpg,*.png,*.gif,*.avi,*.wmv,*.ogg,
 set wildmode=list:longest
 
 
-" jump to last cursor position when opening files
-function! ResCur()
-  if line("'\"") <= line("$")
-    normal! g`"
-    return 1
-  endif
-endfunction
-
-augroup resCur
-  autocmd!
-  autocmd BufWinEnter * call ResCur()
-augroup END
-" -----------------------------------
-
 let python_highlight_all = 1
 
 " When vimrc is edited, reload it
 autocmd! bufwritepost vimrc source ~/.vimrc
 
 " ######  MAPPINGS  ######
-
-" buf-surf
-"map <silent> <c-u> :BufSurfBack<cr>
-"map <silent> <c-i> :BufSurfForward<cr>
-"map <silent> <leader>j :BufSurfBack<cr>
-"map <silent> <leader>k :BufSurfForward<cr>
-" ----------------------------------------
 
 noremap <C-left> :bprev<CR>
 noremap <C-right> :bnext<CR>
@@ -345,25 +329,10 @@ nnoremap <Leader>o :Open<CR>
 
 map <leader>w :set wrap<cr>
 
-"set switchbuf=usetab,newtab
-
 map ,,, <esc>:b /home/gerald/Dropbox/outline/vot.otl<cr>zM
 
 " Ack
 map <leader>a :exec "Ack! ".expand("<cword>")<cr>
-
-" WriteBackup
-"command -bar -bang W :WriteBackup<bang>
-
-" FuzzyFinder
-"map <leader>fj :FufCoverageFile<cr>
-"map <leader>ff :FufFile<cr>
-"map <leader>fc :FufFileWithCurrentBufferDir<cr>
-"map <leader>fh :FufHelp<cr>
-"map <leader>fb :FufBuffer<cr>
-"map <leader>fd :FufDir<cr>
-"map <leader>ft :FufTag<cr>
-"map <leader>fa :FufBufferTagAll<cr>
 
 " TagList
 map <leader>tl :TagbarToggle<CR>
@@ -371,15 +340,13 @@ map <leader>tl :TagbarToggle<CR>
 "TaskList
 map <leader>td <Plug>TaskList
 
-" NerdTree and NerdTreeTabs
+" ###### NerdTree and NerdTreeTabs ######
+"
 map <leader>nt :NERDTreeMirrorToggle<cr>
 map <leader>tt :NERDTreeTabsToggle<cr>
-
-" jslint
-" make F10 call make for linting etc.
-"inoremap <silent> <F10> <C-O>:make<CR>
-"map <silent> <F10> :make<CR>
-"nmap <F4> :w<CR>:make<CR>:cw<CR>
+"
+let g:NERDTreeWinSize=25
+let g:nerdtree_tabs_open_on_gui_startup = 0
 
 " for outlining
 map <space> za
@@ -440,36 +407,15 @@ let g:utl_cfg_hdl_scm_http__wget="call Utl_if_hdl_scm_http__wget('%u')"
 " mailto handler
 let g:utl_cfg_hdl_scm_mailto = "silent !thunderbird '%u' &"
 "
-" ###### FuzzyFinder ######
-"
-"let g:fuf_modesDisable = [ 'mrufile', 'mrucmd', ]
-
-" ###### tabman: side bar tab-and buffer-manager ######
-"
-"let g:tabman_width = 25
-"let g:tabman_specials = 1
-
 " ###### buftabs: inobtrusive tab-like buffer switching ######
 "
 let g:buftabs_only_basename=1
-
-" ###### NerdTree ######
-"
-let g:NERDTreeWinSize=25
-let g:nerdtree_tabs_open_on_gui_startup = 1
 
 " ###### Ack ######
 "
 let g:ackhighlight=1
 let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
-" ###### easy-tags ######
-"
-" Disable the warning that another plugin decreased updatetime
-"let g:easytags_updatetime_autodisable=1
-
-" ###### VOom ######
-"
 " Vim commands for creating and deleting folds are not very useful and are
 "potentially dangerous when typed accidentally.
 " Disable commands for creating and deleting folds.
@@ -478,20 +424,6 @@ noremap zF <Nop>
 noremap zd <Nop>
 noremap zD <Nop>
 noremap zE <Nop>
-
-" ###### pymode - Rope ######
-"
-"let g:pymode_lint_checker = "pep8,mccabe"
-"let pymode_rope_vim_completion=1
-"let pymode_rope_extended_complete=1
-"let pymode_lint = 0
-"let pymode_lint_write = 0
-
-" ###### DirDiff ######
-"
-"let g:DirDiffExcludes = "CVS,*.class,*.exe,.*.swp"
-"let g:DirDiffIgnore = "Id:,Revision:,Date:"
-
 
 " ############ END PLUGINS ############
 "
