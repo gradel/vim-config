@@ -520,3 +520,23 @@ EOF
 if filereadable($VIRTUAL_ENV . '/.vimrc')
     source $VIRTUAL_ENV/.vimrc
 endif
+
+"""""""""" HASKELL """"""""""""""
+
+" You may already have the following two on, please check
+syntax on
+filetype plugin on
+
+" This assumes that ghc is in your path, if it is not, or you
+" wish to use a specific version of ghc, then please change
+" the ghc below to a full path to the correct one
+au BufEnter *.hs compiler ghc
+
+" For this section both of these should be set to your
+" browser and ghc of choice, I used the following
+" two vim lines to get those paths:
+" :r!which google-chrome
+" :r!which ghc
+let g:haddock_browser = "/usr/bin/firefox"
+let g:ghc = "/usr/bin/ghc"
+let g:haddock_docdir = "/usr/share/doc/ghc-doc/html/"
