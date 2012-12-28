@@ -540,3 +540,13 @@ au BufEnter *.hs compiler ghc
 let g:haddock_browser = "/usr/bin/firefox"
 let g:ghc = "/usr/bin/ghc"
 let g:haddock_docdir = "/usr/share/doc/ghc-doc/html/"
+
+fun! RangerChooser()
+  exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
+  if filereadable('/tmp/chosenfile')
+    exec 'edit ' . system('cat /tmp/chosenfile')
+    call system('rm /tmp/chosenfile')
+  endif
+  redraw!
+endfun
+map <leader>r :call RangerChooser()<CR>
