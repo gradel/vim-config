@@ -43,7 +43,6 @@ Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'kien/tabman.vim'
 Bundle 'xolox/vim-shell'
 Bundle 'sjl/gundo.vim'
-Bundle 'dradtke/VIP'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/MatchTag'
 Bundle 'itspriddle/vim-jquery'
@@ -147,12 +146,12 @@ set showmatch
 
 let mapleader = ","
 
-if &term =~ '^\(xterm\|screen\)$' && $COLORTERM == 'gnome-terminal'
-    set t_Co=256
-    "colorscheme wombat256i
-endif
 set t_Co=256
 colorscheme blackboard
+set cursorline
+" change it to a color fitting to your theme :)
+highlight cursorline guibg=grey
+
 
 nmap <c-s> :w<CR>
 imap <c-s> <Esc>:w<CR>a
@@ -325,12 +324,9 @@ nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
 nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
 
 
-"inoremap <Leader>o <C-o>:Open<CR>
 nnoremap <Leader>o :Open<CR>
 
 map <leader>w :set wrap<cr>
-
-map ,,, <esc>:b /home/gerald/Dropbox/outline/vot.otl<cr>zM
 
 " Ack
 map <leader>a :exec "Ack! ".expand("<cword>")<cr>
@@ -340,6 +336,7 @@ map <leader>tl :TagbarToggle<CR>
 
 "TaskList
 map <leader>td <Plug>TaskList
+let g:tlTokenList = ['FIX', 'todo', 'ToDo', 'TODO', 'XX']
 
 " ###### NerdTree and NerdTreeTabs ######
 "
