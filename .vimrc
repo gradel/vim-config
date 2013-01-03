@@ -154,7 +154,6 @@ highlight cursorline guibg=grey
 nmap <c-a> :w<CR>
 imap <c-a> <Esc>:w<CR>
 
-nmap <c-q> :q<CR>
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -315,12 +314,6 @@ map <c-h> <C-W>h
 " happen as if in command mode ) not working!
 "imap <C-W> <C-O><C-W>
 
-" vim-utl
-nmap <leader>y :Utl ol<cr>
-nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
-nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
-
-
 nnoremap <Leader>o :Open<CR>
 
 map <leader>w :set wrap<cr>
@@ -390,18 +383,20 @@ nnoremap <silent> <leader>h :noh<CR><C-l>
 " systems http client
 let g:utl_cfg_hdl_scm_http_system = "!xdg-open %u"
 " let g:utl_cfg_hdl_scm_http_system = "silent !firefox -remote 'ping()' && firefox -remote 'openURL( %u#%f )' || firefox '%u#%f' &"
-"
 " pdf handler
 let g:utl_cfg_hdl_mt_application_pdf = ':silent !evince %p &'
-
-"nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
-"nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
-" [id=utl_cfg_hdl_scm_http__wget]
-let g:utl_cfg_hdl_scm_http__wget="call Utl_if_hdl_scm_http__wget('%u')"
-"
 " mailto handler
 let g:utl_cfg_hdl_scm_mailto = "silent !thunderbird '%u' &"
 "
+"nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
+"nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
+" [id=utl_cfg_hdl_scm_http__wget]
+"let g:utl_cfg_hdl_scm_http__wget="call Utl_if_hdl_scm_http__wget('%u')"
+"
+nmap <leader>l :Utl ol<cr>
+nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
+nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
+
 " ###### buftabs: inobtrusive tab-like buffer switching ######
 "
 let g:buftabs_only_basename=1
