@@ -50,7 +50,6 @@ Bundle 'kchmck/vim-coffee-script'
 "Bundle 'ervandew/supertab'
 "Bundle 'ivanov/vim-ipython'
 "Bundle 'vim-scripts/AutoComplPop'
-"Bundle 'vim-scripts/Conque-Shell'
 "Bundle 'gregsexton/gitv'
 "Bundle 'vim-scripts/ZoomWin'
 
@@ -152,9 +151,8 @@ set cursorline
 highlight cursorline guibg=grey
 
 
-nmap <c-s> :w<CR>
-imap <c-s> <Esc>:w<CR>a
-imap <c-s> <Esc><c-s>
+nmap <c-a> :w<CR>
+imap <c-a> <Esc>:w<CR>
 
 nmap <c-q> :q<CR>
 
