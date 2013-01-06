@@ -4,7 +4,9 @@ filetype off                   " required until end of vundle section
 set rtp+=~/.vim/bundle/vundle/
 call vundle#rc()
 
-" ###### VUNDLE ######
+" ===============================
+" vundle
+" ===============================
 
 " let Vundle manage Vundle
 " required!
@@ -13,7 +15,6 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 "
 " original repos on github
-"Bundle 'lambdalisue/vim-django-support'
 Bundle 'pbrisbin/html-template-syntax'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
@@ -47,6 +48,7 @@ Bundle 'gregsexton/MatchTag'
 Bundle 'itspriddle/vim-jquery'
 Bundle 'klen/python-mode'
 Bundle 'kchmck/vim-coffee-script'
+"Bundle 'lambdalisue/vim-django-support'
 "Bundle 'ervandew/supertab'
 "Bundle 'ivanov/vim-ipython'
 "Bundle 'vim-scripts/AutoComplPop'
@@ -64,73 +66,15 @@ filetype plugin indent on     " required!
 " see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed.
 "
-"let verbose = 1
-set hidden
-"UTF-8 als Default-Encoding
-set enc=utf-8
-
-" Completion settings in insertmode
-set complete=.,w,b,t,i
-" TODO
-set completeopt=menuone,longest,preview
-"autocmd FileType python set omnifunc=pythoncomplete#Complete
-set pumheight=12
-" -------------------------------------------------------
-
-" ##### ropevim #####
-
-" Rope AutoComplete
-"let ropevim_vim_completion=1
-let ropevim_extended_complete=1
-let g:pymode_rope_always_show_complete_menu = 1
-let g:ropevim_autoimport_modules = ["os.*","traceback","django.*", "xml.etree"]
-
-let g:pymode_lint_cwindow = 1
-
-" Jump to the definition of whatever the cursor is on
-map <leader>j :RopeGotoDefinition<CR>
-
-" Rename whatever the cursor is on (including references to it)
-map <leader>r :RopeRename<CR>
-
-" open/close the quickfix window (not working!)
-nmap <leader>f :copen<CR>
-nmap <leader>fc :cclose<CR>
-
-" close preview window automatically when we move around
-"autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-" ##### tagbar #####
-
-let g:tagbar_autoshowtag = 1
-let g:tagbar_width = 30
-"autocmd FileType * nested :call tagbar#autoopen(0)
-
-" ==========================================================
-" Javascript
-" ==========================================================
-au BufRead *.js set makeprg=jslint\ %
-
-" Use tab to scroll through autocomplete menus ---- this prevents snipmate to
-" work
-"autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
-"autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
-
-" ##### coffeescript #####
-
-au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
-
-" compile on save
-au BufWritePost *.coffee silent CoffeeMake!
-
-
-let g:acp_completeoptPreview=1
-
-" ###### GENERAL SETTINGS ######
+" ===================================
+" GENERAL SETTINGS
+" ===================================
 "
 filetype plugin on
+filetype on
 syntax enable
+syntax on
+let python_highlight_all = 1
 set title
 set nocompatible
 set autoread
@@ -147,19 +91,35 @@ let mapleader = ","
 set t_Co=256
 colorscheme blackboard
 set cursorline
-" change it to a color fitting to your theme :)
-highlight cursorline guibg=grey
+highlight cursorline guibg=#333333
 
+"let verbose = 1
+set hidden
+"UTF-8 als Default-Encoding
+set enc=utf-8
 
-nmap <c-a> :w<CR>
-imap <c-a> <Esc>:w<CR>
+" =============
+" simple saving
+" =============
+"
+nmap ww :w<CR>
+imap ww <Esc>:w<CR>
+nmap wwq :wq<CR>
+imap wwq <Esc>:wq<CR>
 
-
+" ========================
+" show trailing whitespace
+" ========================
+"
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
 autocmd BufWinEnter,InsertLeave * match ExtraWhitespace /\s\+$/
 autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
+" ===========
+" status line
+" ===========
+"
 if has('statusline')
     set laststatus=2
 " Broken down into easily includeable segments
@@ -179,47 +139,62 @@ if has('cmdline_info')
                                 " selected characters/lines in visual mode
 endif
 
+" ====
+" misc
+" ====
+"
+" add < > to chars that form pairs (see % command)
+set matchpairs+=<:>
+
+nnoremap <Leader>o :Open<CR>
+map <leader>w :set wrap<cr>
+
+" ==============
+" copy and paste
+" ==============
+"
+map <leader>p "+p
+cmap <leader>p <C-R>+
+vnoremap <leader>y "+y
+
+" ===============
+" quickfix window
+" ===============
+"
+" open/close the quickfix window (not working!)
+nmap <leader>f :copen<CR>
+nmap <leader>fc :cclose<CR>
+
+" close preview window automatically when we move around
+"autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
 " ###### PERSISTENT UNDO ######
-"
-set undodir=~/Dropbox/undodir
-set undofile
-set undolevels=1000 "maximum number of changes that can be undone
-set undoreload=10000 "maximum number lines to save for undo on a buffer reload
-" ----------------------------------------------------------------------------
+" cool but insecure
+"set undodir=~/Dropbox/undodir
+"set undofile
+"set undolevels=1000 "maximum number of changes that can be undone
+"set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
-" don't know why, but deleting a buffer deletes vim
-"
-function! JustDeleteBuffer()
-    let curbuf = bufnr("%")
-    exe "bp"
-    exe "bd " curbuf
-endfunction
-
-map <leader>q :call JustDeleteBuffer()<cr>
-" ----------------------------------------
-
-"  ###### INDENTATION AND TAB OPTIONS ######
+" ================================================
+" INDENTATION AND TAB OPTIONS
+" ================================================
 
 " never change tabstop from default(8), only change shiftwidth and
 " softtabstop!
 set softtabstop=4
 set shiftwidth=4
-
-" Attempt to determine the type of a file based on its name and possibly its
-" contents.  Use this to allow intelligent auto-indenting for each filetype,
-" and for plugins that are filetype specific
 set autoindent
 set smartindent
-
 " Tab converted to spaces
 set expandtab
-
 " when at 3 spaces, and I hit > ... go to 4, not 7
 set shiftround
-
 set smarttab
 
-" ###### FOLDING OPTIONS ######
+" ================================================
+" FOLDING OPTIONS
+" ================================================
 
 " These commands open folds
 "set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
@@ -232,15 +207,46 @@ set foldlevel=3
 set foldnestmax=3
 set foldcolumn=2
 
-" ###### MOVEMENT ######
+" for outlining
+map <space> za
 
-" --- General Movement
+" Vim commands for creating and deleting folds are not very useful and are
+"potentially dangerous when typed accidentally.
+" Disable commands for creating and deleting folds.
+noremap zf <Nop>
+noremap zF <Nop>
+noremap zd <Nop>
+noremap zD <Nop>
+noremap zE <Nop>
+
+" ================================================
+" buffer, file and cursor movement
+" ================================================
+
+" window navigation
+map <c-j> <C-W>j
+map <c-k> <C-W>k
+map <c-l> <C-W>l
+map <c-h> <C-W>h
+
+" and lets make these all work in insert mode too ( <C-O> makes next cmd
+" happen as if in command mode ) not working!
+"imap <C-W> <C-O><C-W>
+
 " Easy switch between windows
 nmap <tab><tab> <C-w>w
+
+" while wrapping lines move screen-linewise
+nnoremap j gj
+nnoremap k gk
 
 " Reselect visual block after indent/outdent
 vnoremap < <gv
 vnoremap > >gv
+
+" make tab in v mode ident code, hm, funzt net
+"vnoremap <tab> >gv
+"vnoremap <s-tab> <gv
 
 " jump to last cursor position when opening files
 function! ResCur()
@@ -255,14 +261,20 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
+noremap <C-left> :bprev<CR>
+noremap <C-right> :bnext<CR>
+
+nnoremap <F5> :buffers<CR>:buffer<Space>
+
+command -nargs=? -bang  BB  if <q-args> != '' | exe 'buffer '.<q-args> | else | ls<bang> | let buffer_nn=input('Which one: ') | if buffer_nn != '' | exe buffer_nn != 0 ? 'buffer '.buffer_nn : 'enew' | endif | endif
+
+set wildchar=<Tab> wildmenu wildmode=full
+
+set wildcharm=<C-Z>
+nnoremap <F10> :b <C-Z>
+
 " backspace and cursor can go lines up or down
 "set whichwrap+=h,l
-
-" add < > to chars that form pairs (see % command)
-set matchpairs+=<:>
-
-" Enable error files & error jumping
-"set cf
 
 " Stop certain movements from always going to the first character of a line.
 " While this behaviour deviates from that of Vi, it does what most users
@@ -272,63 +284,73 @@ set nostartofline
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
 
-" ###### SEARCH OPTIONS
+" ===================================
+" SEARCH OPTIONS
+" ===================================
 "
 " Highlight searches
 set hlsearch
-
 " Use case insensitive search, except when using capital letters
 set ignorecase
 set smartcase
 set incsearch
+" disable search highlighting til next search
+nnoremap <silent> <leader>h :noh<CR><C-l>
 
-" ###### COMPLETION ######
+" ===================================
+" COMPLETION
+" ===================================
 
-" Better command-line completion
+" Completion settings in insertmode
+set complete=.,w,b,t,i
+" TODO
+set completeopt=menuone,longest,preview
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+set pumheight=12
+
 set wildmenu
 set wildignore+=*.pyc,*.zip,*.gz,*.bz,*.tar,*.jpg,*.png,*.gif,*.avi,*.wmv,*.ogg,*.mp3,*.mov
 set wildmode=list:longest
 
+" Use tab to scroll through autocomplete menus ---- this prevents snipmate to
+" work
+"autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
+"autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
+" ?? let g:acp_completeoptPreview=1
 
-let python_highlight_all = 1
+" ==============================================
+" PLUGIN SETTINGS
+" ==============================================
 
-" When vimrc is edited, reload it
-autocmd! bufwritepost vimrc source ~/.vimrc
-
-" ######  MAPPINGS  ######
-
-noremap <C-left> :bprev<CR>
-noremap <C-right> :bnext<CR>
-
-nnoremap <F5> :buffers<CR>:buffer<Space>
-
-command -nargs=? -bang  BB  if <q-args> != '' | exe 'buffer '.<q-args> | else | ls<bang> | let buffer_nn=input('Which one: ') | if buffer_nn != '' | exe buffer_nn != 0 ? 'buffer '.buffer_nn : 'enew' | endif | endif
-
-" window navigation
-map <c-j> <C-W>j
-map <c-k> <C-W>k
-map <c-l> <C-W>l
-map <c-h> <C-W>h
-
-" and lets make these all work in insert mode too ( <C-O> makes next cmd
-" happen as if in command mode ) not working!
-"imap <C-W> <C-O><C-W>
-
-nnoremap <Leader>o :Open<CR>
-
-map <leader>w :set wrap<cr>
-
+" ===
 " Ack
+" ===
+"
 map <leader>a :exec "Ack! ".expand("<cword>")<cr>
 
-" TagList
+let g:ackhighlight=1
+let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+
+" =======
+" tagbar
+" =======
+
+let g:tagbar_autoshowtag = 1
+let g:tagbar_width = 35
+"autocmd FileType * nested :call tagbar#autoopen(0)
+
 map <leader>tl :TagbarToggle<CR>
 
-"TaskList
+" ========
+" TaskList
+" ========
+"
 map <leader>td <Plug>TaskList
 let g:tlTokenList = ['FIX', 'todo', 'ToDo', 'TODO', 'XX']
 
-" ###### NerdTree and NerdTreeTabs ######
+" =========================
+" NerdTree and NerdTreeTabs
+" ========================
 "
 map <leader>nt :NERDTreeMirrorToggle<cr>
 map <leader>tt :NERDTreeTabsToggle<cr>
@@ -336,49 +358,36 @@ map <leader>tt :NERDTreeTabsToggle<cr>
 let g:NERDTreeWinSize=25
 let g:nerdtree_tabs_open_on_gui_startup = 0
 
-" for outlining
-map <space> za
-
+" ========
 " fugitive
+" ========
+"
 if has ("autocmd")
 autocmd User fugitive if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnoremap <buffer> .. :edit %:h<CR> endif
 "autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
 
-set wildchar=<Tab> wildmenu wildmode=full
+" =====
+" Gundo
+" =====
+nnoremap <leader>gu :GundoToggle<CR>
 
-set wildcharm=<C-Z>
-nnoremap <F10> :b <C-Z>
+" =======
+" ropevim
+" =======
 
-" while wrapping lines move screen-linewise
-nnoremap j gj
-nnoremap k gk
-
-" Copy Paste
-map <leader>p "+p
-cmap <leader>p <C-R>+
-vnoremap <leader>y "+y
-
-" disable search highlighting til next search
-nnoremap <silent> <leader>h :noh<CR><C-l>
-
-" additional esc's for ins mode.
-" note: ctrl [ or ctrl c work also as esc
-"inoremap kj <esc>
-"inoremap jk <esc>
-
-" ############  PLUGIN SETTINGS  ############
+" Rope AutoComplete
+let ropevim_extended_complete=1
+let g:pymode_rope_always_show_complete_menu = 1
+let g:ropevim_autoimport_modules = ["os.*","traceback","django.*", "xml.etree"]
+let g:pymode_lint_cwindow = 1
+" Jump to the definition of whatever the cursor is on
+map <leader>j :RopeGotoDefinition<CR>
+" let ropevim_vim_completion=1
 "
-" ###### dbext ######
-"let g:dbext_default_profile_mysql_local = 'type=MYSQL:user=root:passwd=taxi173:dbname=vimdb'
-
-" ####### ConqueTerm ############
-"let g:ConqueTerm_Color = 2
-"let g:ConqueTerm_CWInsert = 1
-"let g:ConqueTerm_ExecFileKey = '<F4>'
-"let g:ConqueTerm_SendFileKey = '<F6>'
-
-" ###### utl ######
+" ===
+" utl
+" ===
 "
 " systems http client
 let g:utl_cfg_hdl_scm_http_system = "!xdg-open %u"
@@ -397,28 +406,30 @@ nmap <leader>l :Utl ol<cr>
 nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
 nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
 
-" ###### buftabs: inobtrusive tab-like buffer switching ######
+" =======
+" buftabs
+" =======
 "
 let g:buftabs_only_basename=1
 
-" ###### Ack ######
+" ==========
+" javascript
+" ==========
 "
-let g:ackhighlight=1
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+au BufRead *.js set makeprg=jslint\ %
 
-" Vim commands for creating and deleting folds are not very useful and are
-"potentially dangerous when typed accidentally.
-" Disable commands for creating and deleting folds.
-noremap zf <Nop>
-noremap zF <Nop>
-noremap zd <Nop>
-noremap zD <Nop>
-noremap zE <Nop>
+" ============
+" coffeescript
+" ============
 
-" ############ END PLUGINS ############
-"
+au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 
-" ###### php Plugin ######
+" compile on save
+au BufWritePost *.coffee silent CoffeeMake!
+
+" ===
+" php
+" ===
 "
 function! OpenPhpFunction (keyword)
   let proc_keyword = substitute(a:keyword , '_', '-', 'g')
@@ -492,9 +503,13 @@ endfunction
 "inoremap <C-p> <C-O>:call OpenPhpFunction('<c-r><c-w>')<CR><C-O>:wincmd p<CR>
 "nnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
 "vnoremap <C-p> :call OpenPhpFunction('<c-r><c-w>')<CR>:wincmd p<CR>
-syntax on
 
+" ==========
+" virtualenv
+" ==========
+"
 " Add the virtualenv's site-packages to vim path
+"
 py << EOF
 import os.path
 import sys
@@ -511,12 +526,10 @@ if filereadable($VIRTUAL_ENV . '/.vimrc')
     source $VIRTUAL_ENV/.vimrc
 endif
 
-"""""""""" HASKELL """"""""""""""
-
-" You may already have the following two on, please check
-syntax on
-filetype plugin on
-
+" =======
+" haskell
+" =======
+"
 " This assumes that ghc is in your path, if it is not, or you
 " wish to use a specific version of ghc, then please change
 " the ghc below to a full path to the correct one
@@ -531,6 +544,10 @@ let g:haddock_browser = "/usr/bin/firefox"
 let g:ghc = "/usr/bin/ghc"
 let g:haddock_docdir = "/usr/share/doc/ghc-doc/html/"
 
+" ==================
+" ranger filemanager
+" ==================
+"
 fun! RangerChooser()
   exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
   if filereadable('/tmp/chosenfile')
