@@ -18,7 +18,6 @@ Bundle 'gmarik/vundle'
 Bundle 'pbrisbin/html-template-syntax'
 Bundle "MarcWeber/vim-addon-mw-utils"
 Bundle "tomtom/tlib_vim"
-Bundle "snipmate-snippets"
 Bundle "honza/snipmate-snippets"
 Bundle "garbas/vim-snipmate"
 Bundle 'docunext/closetag.vim'
@@ -98,14 +97,14 @@ set hidden
 "UTF-8 als Default-Encoding
 set enc=utf-8
 
+imap jj <esc>
+
 " =============
 " simple saving
 " =============
 "
-nmap ww :w<CR>
-imap ww <Esc>:w<CR>
-nmap wwq :wq<CR>
-imap wwq <Esc>:wq<CR>
+nmap <leader>m :w<CR>
+imap <leader>m <Esc>:w<CR>
 
 " ========================
 " show trailing whitespace
@@ -297,6 +296,10 @@ set incsearch
 " disable search highlighting til next search
 nnoremap <silent> <leader>h :noh<CR><C-l>
 
+" center search
+nmap n nzz
+nmap N Nzz
+
 " ===================================
 " COMPLETION
 " ===================================
@@ -373,16 +376,18 @@ endif
 nnoremap <leader>gu :GundoToggle<CR>
 
 " =======
-" ropevim
+" python-mode
 " =======
 
 " Rope AutoComplete
+let g:pymode_lint_checker = "pyflakes,mccabe"
 let ropevim_extended_complete=1
 let g:pymode_rope_always_show_complete_menu = 1
 let g:ropevim_autoimport_modules = ["os.*","traceback","django.*", "xml.etree"]
 let g:pymode_lint_cwindow = 1
 " Jump to the definition of whatever the cursor is on
 map <leader>j :RopeGotoDefinition<CR>
+let g:pymode_run_key='R'
 " let ropevim_vim_completion=1
 "
 " ===
