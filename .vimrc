@@ -26,7 +26,10 @@ Bundle 'pbrisbin/html-template-syntax'
 Bundle 'docunext/closetag.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'suan/vim-instant-markdown'
+Bundle 'xolox/vim-misc'
+Bundle 'xolox/vim-notes'
 Bundle 'xolox/vim-pyref'
+Bundle 'xolox/vim-shell'
 Bundle 'tpope/vim-fugitive'
 Bundle 'tpope/vim-unimpaired'
 Bundle 'vim-scripts/L9'
@@ -43,7 +46,6 @@ Bundle 'scrooloose/syntastic'
 Bundle 'jistr/vim-nerdtree-tabs'
 Bundle 'kien/rainbow_parentheses.vim'
 Bundle 'kien/tabman.vim'
-Bundle 'xolox/vim-shell'
 Bundle 'sjl/gundo.vim'
 Bundle 'mattn/zencoding-vim'
 Bundle 'gregsexton/MatchTag'
@@ -104,6 +106,9 @@ set enc=utf-8
 
 imap jj <esc>
 
+map <leader>a :exec "Ggrep ".expand("<cword>")<cr>
+
+let wordUnderCursor = expand("<cword>")
 let g:ConqueTerm_ToggleKey = '<F8>'
 let g:ConqueTerm_ExecFileKey = '<F11>'
 " =============
@@ -176,6 +181,8 @@ map <leader>p "+p
 cmap <leader>p <C-R>+
 vnoremap <leader>y "+y
 
+nmap <leader><leader> viw"+yviw
+
 " ===============
 " quickfix window
 " ===============
@@ -189,7 +196,7 @@ nmap <leader>fc :cclose<CR>
 "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
 " ###### PERSISTENT UNDO ######
-" cool but insecure
+
 "set undodir=~/Dropbox/undodir
 "set undofile
 "set undolevels=1000 "maximum number of changes that can be undone
@@ -227,7 +234,12 @@ set foldnestmax=3
 set foldcolumn=2
 
 " for outlining
-map <space> za
+"map <space> za
+
+" Toggle folding
+nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
+vnoremap <Space> zf
+
 
 " Vim commands for creating and deleting folds are not very useful and are
 "potentially dangerous when typed accidentally.
@@ -355,14 +367,23 @@ set wildmode=list:longest
 " PLUGIN SETTINGS
 " ==============================================
 
+" =========
+" vim-notes
+" =========
+"
+
+let g:notes_directories = ['~/Dropbox/vim-notes',]
+let g:notes_tab_indents = 0
+let g:notes_tagsindex   = '~/Dropbox/vim-notes-tags'
+
 " ===
 " Ack
 " ===
 "
-map <leader>a :exec "Ack! ".expand("<cword>")<cr>
+"map <leader>a :exec "Ack! ".expand("<cword>")<cr>
 
-let g:ackhighlight=1
-let g:ackprg="ack-grep -H --nocolor --nogroup --column"
+"let g:ackhighlight=1
+"let g:ackprg="ack-grep -H --nocolor --nogroup --column"
 
 " =======
 " tagbar
@@ -494,7 +515,7 @@ endif
 " This assumes that ghc is in your path, if it is not, or you
 " wish to use a specific version of ghc, then please change
 " the ghc below to a full path to the correct one
-au BufEnter *.hs compiler ghc
+"au BufEnter *.hs compiler ghc
 
 " For this section both of these should be set to your
 " browser and ghc of choice, I used the following
@@ -502,8 +523,8 @@ au BufEnter *.hs compiler ghc
 " :r!which google-chrome
 " :r!which ghc
 let g:haddock_browser = "/usr/bin/firefox"
-let g:ghc = "/usr/bin/ghc"
-let g:haddock_docdir = "/usr/share/doc/ghc-doc/html/"
+let g:ghc = "/usr/local/bin/ghc"
+let g:haddock_docdir = "/usr/local/share/doc/ghc/html/"
 
 " ==================
 " ranger filemanager
