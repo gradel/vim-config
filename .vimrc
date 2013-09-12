@@ -67,11 +67,11 @@
     endif
 " Setting up Vundle - the vim plugin bundler end
 
+" NOTE: comments after Bundle command are not allowed.
+
 filetype plugin indent on     " required!
 
 set nocompatible               " be iMproved
-
-" NOTE: comments after Bundle command are not allowed.
 "
 " ===================================
 " GENERAL SETTINGS
