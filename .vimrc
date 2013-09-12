@@ -1,63 +1,75 @@
-set nocompatible               " be iMproved
-filetype off                   " required until end of vundle section
+" Setting up Vundle - the vim plugin bundler
+    let iCanHazVundle=1
+    let vundle_readme=expand('~/.vim/bundle/vundle/README.md')
+    if !filereadable(vundle_readme)
+        echo "Installing Vundle.."
+        echo ""
+        silent !mkdir -p ~/.vim/bundle
+        silent !git clone https://github.com/gmarik/vundle ~/.vim/bundle/vundle
+        let iCanHazVundle=0
+    endif
+    filetype off " required until end of vundle section
+    set rtp+=~/.vim/bundle/vundle/
+    call vundle#rc()
 
-set rtp+=~/.vim/bundle/vundle/
-call vundle#rc()
+    " let Vundle manage Vundle
+    " required!
+    Bundle 'gmarik/vundle'
 
-" ===============================
-" vundle
-" ===============================
-
-" let Vundle manage Vundle
-" required!
-Bundle 'gmarik/vundle'
-
-" My Bundles here:
-"
-" original repos on github
-Bundle "waylan/vim-markdown-extra-preview"
-Bundle 'davidhalter/jedi-vim'
-Bundle 'teramako/jscomplete-vim'
-Bundle 'myhere/vim-nodejs-complete'
-Bundle 'pbrisbin/html-template-syntax'
-Bundle 'docunext/closetag.vim'
-Bundle 'majutsushi/tagbar'
-Bundle 'suan/vim-instant-markdown'
-Bundle 'xolox/vim-misc'
-Bundle 'xolox/vim-notes'
-Bundle 'xolox/vim-pyref'
-Bundle 'xolox/vim-shell'
-Bundle 'tpope/vim-fugitive'
-Bundle 'tpope/vim-unimpaired'
-Bundle 'vim-scripts/L9'
-Bundle 'vim-scripts/mru.vim'
-Bundle 'vim-scripts/The-NERD-Commenter'
-Bundle 'vim-scripts/TaskList.vim'
-Bundle 'vim-scripts/writebackup'
-Bundle 'vim-scripts/utl.vim'
-Bundle 'vim-scripts/buftabs'
-Bundle 'vim-scripts/CSApprox'
-Bundle 'mileszs/ack.vim'
-Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
-Bundle 'jistr/vim-nerdtree-tabs'
-Bundle 'kien/rainbow_parentheses.vim'
-Bundle 'kien/tabman.vim'
-Bundle 'sjl/gundo.vim'
-Bundle 'mattn/zencoding-vim'
-Bundle 'gregsexton/MatchTag'
-Bundle 'itspriddle/vim-jquery'
-Bundle 'klen/python-mode'
-Bundle 'kchmck/vim-coffee-script'
-Bundle 'Rykka/riv.vim'
-Bundle 'curist/ConqueTerm'
-"Bundle 'lambdalisue/vim-django-support'
-Bundle 'ervandew/supertab'
-Bundle 'ivanov/vim-ipython'
-"Bundle 'vim-scripts/AutoComplPop'
-"Bundle 'gregsexton/gitv'
+    " My Bundles here:
+    "
+    " original repos on github
+    Bundle "waylan/vim-markdown-extra-preview"
+    Bundle 'davidhalter/jedi-vim'
+    Bundle 'teramako/jscomplete-vim'
+    Bundle 'myhere/vim-nodejs-complete'
+    Bundle 'pbrisbin/html-template-syntax'
+    Bundle 'docunext/closetag.vim'
+    Bundle 'majutsushi/tagbar'
+    Bundle 'suan/vim-instant-markdown'
+    Bundle 'xolox/vim-misc'
+    Bundle 'xolox/vim-notes'
+    Bundle 'xolox/vim-pyref'
+    Bundle 'xolox/vim-shell'
+    Bundle 'tpope/vim-fugitive'
+    Bundle 'tpope/vim-unimpaired'
+    Bundle 'vim-scripts/L9'
+    Bundle 'vim-scripts/mru.vim'
+    Bundle 'vim-scripts/The-NERD-Commenter'
+    Bundle 'vim-scripts/TaskList.vim'
+    Bundle 'vim-scripts/writebackup'
+    Bundle 'vim-scripts/utl.vim'
+    Bundle 'vim-scripts/buftabs'
+    Bundle 'vim-scripts/CSApprox'
+    Bundle 'mileszs/ack.vim'
+    Bundle 'scrooloose/nerdtree'
+    Bundle 'scrooloose/syntastic'
+    Bundle 'jistr/vim-nerdtree-tabs'
+    Bundle 'kien/rainbow_parentheses.vim'
+    Bundle 'kien/tabman.vim'
+    Bundle 'sjl/gundo.vim'
+    Bundle 'mattn/zencoding-vim'
+    Bundle 'gregsexton/MatchTag'
+    Bundle 'itspriddle/vim-jquery'
+    Bundle 'klen/python-mode'
+    Bundle 'kchmck/vim-coffee-script'
+    Bundle 'Rykka/riv.vim'
+    Bundle 'curist/ConqueTerm'
+    "Bundle 'lambdalisue/vim-django-support'
+    Bundle 'ervandew/supertab'
+    Bundle 'ivanov/vim-ipython'
+    "Bundle 'vim-scripts/AutoComplPop'
+    "Bundle 'gregsexton/gitv'
+    if iCanHazVundle == 0
+        echo "Installing Bundles, please ignore key map error messages"
+        echo ""
+        :BundleInstall
+    endif
+" Setting up Vundle - the vim plugin bundler end
 
 filetype plugin indent on     " required!
+
+set nocompatible               " be iMproved
 
 " NOTE: comments after Bundle command are not allowed.
 "
