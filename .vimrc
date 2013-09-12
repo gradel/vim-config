@@ -19,10 +19,6 @@ Bundle 'davidhalter/jedi-vim'
 Bundle 'teramako/jscomplete-vim'
 Bundle 'myhere/vim-nodejs-complete'
 Bundle 'pbrisbin/html-template-syntax'
-"Bundle "MarcWeber/vim-addon-mw-utils"
-"Bundle "tomtom/tlib_vim"
-"Bundle "honza/snipmate-snippets"
-"Bundle "garbas/vim-snipmate"
 Bundle 'docunext/closetag.vim'
 Bundle 'majutsushi/tagbar'
 Bundle 'suan/vim-instant-markdown'
@@ -59,17 +55,9 @@ Bundle 'ervandew/supertab'
 Bundle 'ivanov/vim-ipython'
 "Bundle 'vim-scripts/AutoComplPop'
 "Bundle 'gregsexton/gitv'
-"Bundle 'vim-scripts/ZoomWin'
 
 filetype plugin indent on     " required!
 
-" Brief help
-" :BundleList          - list configured bundles
-" :BundleInstall(!)    - install(update) bundles
-" :BundleSearch(!) foo - search(or refresh cache first) for foo
-" :BundleClean(!)      - confirm(or auto-approve) removal of unused bundles
-"
-" see :h vundle for more details or wiki for FAQ
 " NOTE: comments after Bundle command are not allowed.
 "
 " ===================================
@@ -109,8 +97,7 @@ imap jj <esc>
 map <leader>a :exec "Ggrep ".expand("<cword>")<cr>
 
 let wordUnderCursor = expand("<cword>")
-let g:ConqueTerm_ToggleKey = '<F8>'
-let g:ConqueTerm_ExecFileKey = '<F11>'
+
 " =============
 " simple saving
 " =============
@@ -187,20 +174,13 @@ nmap <leader><leader> viw"+yviw
 " quickfix window
 " ===============
 "
-" open/close the quickfix window (not working!)
+" open/close the quickfix window
 nmap <leader>f :copen<CR>
 nmap <leader>fc :cclose<CR>
 
 " close preview window automatically when we move around
 "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
-
-" ###### PERSISTENT UNDO ######
-
-"set undodir=~/Dropbox/undodir
-"set undofile
-"set undolevels=1000 "maximum number of changes that can be undone
-"set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
 " ================================================
 " INDENTATION AND TAB OPTIONS
@@ -233,13 +213,8 @@ set foldlevel=3
 set foldnestmax=3
 set foldcolumn=2
 
-" for outlining
-"map <space> za
-
 " Toggle folding
 nnoremap <silent> <Space> @=(foldlevel('.')?'za':"\<Space>")<CR>
-vnoremap <Space> zf
-
 
 " Vim commands for creating and deleting folds are not very useful and are
 "potentially dangerous when typed accidentally.
@@ -275,9 +250,9 @@ nnoremap k gk
 vnoremap < <gv
 vnoremap > >gv
 
-" make tab in v mode ident code, hm, funzt net
-"vnoremap <tab> >gv
-"vnoremap <s-tab> <gv
+" make tab in v mode ident code
+vnoremap <tab> >gv
+vnoremap <s-tab> <gv
 
 " jump to last cursor position when opening files
 function! ResCur()
@@ -292,25 +267,16 @@ augroup resCur
   autocmd BufWinEnter * call ResCur()
 augroup END
 
+" switch buffers
 noremap <C-left> :bprev<CR>
 noremap <C-right> :bnext<CR>
-
-nnoremap <F5> :buffers<CR>:buffer<Space>
 
 command -nargs=? -bang  BB  if <q-args> != '' | exe 'buffer '.<q-args> | else | ls<bang> | let buffer_nn=input('Which one: ') | if buffer_nn != '' | exe buffer_nn != 0 ? 'buffer '.buffer_nn : 'enew' | endif | endif
 
 set wildchar=<Tab> wildmenu wildmode=full
 
-set wildcharm=<C-Z>
-nnoremap <F10> :b <C-Z>
-
 " backspace and cursor can go lines up or down
 "set whichwrap+=h,l
-
-" Stop certain movements from always going to the first character of a line.
-" While this behaviour deviates from that of Vi, it does what most users
-" coming from other editors would expect.
-set nostartofline
 
 " Allow backspacing over autoindent, line breaks and start of insert action
 set backspace=indent,eol,start
@@ -357,12 +323,6 @@ set wildmenu
 set wildignore+=*.pyc,*.zip,*.gz,*.bz,*.tar,*.jpg,*.png,*.gif,*.avi,*.wmv,*.ogg,*.mp3,*.mov
 set wildmode=list:longest
 
-" Use tab to scroll through autocomplete menus ---- this prevents snipmate to
-" work
-"autocmd VimEnter * imap <expr> <Tab> pumvisible() ? "<C-N>" : "<Tab>"
-"autocmd VimEnter * imap <expr> <S-Tab> pumvisible() ? "<C-P>" : "<S-Tab>"
-" ?? let g:acp_completeoptPreview=1
-
 " ==============================================
 " PLUGIN SETTINGS
 " ==============================================
@@ -376,22 +336,12 @@ let g:notes_directories = ['~/Dropbox/vim-notes',]
 let g:notes_tab_indents = 0
 let g:notes_tagsindex   = '~/Dropbox/vim-notes-tags'
 
-" ===
-" Ack
-" ===
-"
-"map <leader>a :exec "Ack! ".expand("<cword>")<cr>
-
-"let g:ackhighlight=1
-"let g:ackprg="ack-grep -H --nocolor --nogroup --column"
-
 " =======
 " tagbar
 " =======
 
 let g:tagbar_autoshowtag = 1
 let g:tagbar_width = 35
-"autocmd FileType * nested :call tagbar#autoopen(0)
 
 map <leader>tl :TagbarToggle<CR>
 
@@ -507,24 +457,6 @@ EOF
 if filereadable($VIRTUAL_ENV . '/.vimrc')
     source $VIRTUAL_ENV/.vimrc
 endif
-
-" =======
-" haskell
-" =======
-"
-" This assumes that ghc is in your path, if it is not, or you
-" wish to use a specific version of ghc, then please change
-" the ghc below to a full path to the correct one
-"au BufEnter *.hs compiler ghc
-
-" For this section both of these should be set to your
-" browser and ghc of choice, I used the following
-" two vim lines to get those paths:
-" :r!which google-chrome
-" :r!which ghc
-let g:haddock_browser = "/usr/bin/firefox"
-let g:ghc = "/usr/local/bin/ghc"
-let g:haddock_docdir = "/usr/local/share/doc/ghc/html/"
 
 " ==================
 " ranger filemanager
