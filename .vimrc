@@ -15,6 +15,7 @@ Bundle 'gmarik/vundle'
 " My Bundles here:
 "
 " original repos on github
+Bundle "waylan/vim-markdown-extra-preview"
 Bundle 'davidhalter/jedi-vim'
 Bundle 'teramako/jscomplete-vim'
 Bundle 'myhere/vim-nodejs-complete'
