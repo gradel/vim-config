@@ -49,6 +49,8 @@
     Bundle 'kien/tabman.vim'
     Bundle 'sjl/gundo.vim'
     Bundle 'mattn/zencoding-vim'
+    " XML/HTML tags navigation
+    Bundle 'matchit.zip'
     Bundle 'gregsexton/MatchTag'
     Bundle 'itspriddle/vim-jquery'
     Bundle 'klen/python-mode'
