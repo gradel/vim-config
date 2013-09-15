@@ -342,16 +342,6 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_flake8_args = '--ignore="E401,E501,E701,E241,E126,E127,E128"'
 
-
-" =========
-" vim-notes
-" =========
-"
-
-let g:notes_directories = ['~/Dropbox/vim-notes',]
-let g:notes_tab_indents = 0
-let g:notes_tagsindex   = '~/Dropbox/vim-notes-tags'
-
 " =======
 " tagbar
 " =======
@@ -468,3 +458,12 @@ fun! RangerChooser()
   redraw!
 endfun
 map <leader>r :call RangerChooser()<CR>
+
+" ==============
+" local settings
+" ==============
+
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
+
