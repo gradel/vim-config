@@ -342,6 +342,13 @@ set wildmode=list:longest
 " ==============================================
 
 " =========
+" Syntastic
+" =========
+
+" Available checkers: flake8 pyflakes pep8 pylint python
+let g:syntastic_python_checkers=['pyflakes']
+
+" =========
 " vim-notes
 " =========
 "
