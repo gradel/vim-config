@@ -97,9 +97,14 @@ set showmatch
 
 let mapleader = ","
 
-" Use 256 colours (Use this setting only if your terminal supports 256 colours)
-set t_Co=256
-colorscheme blackboard
+" use 256 colors when possible
+if &term =~? 'mlterm\|xterm\|xterm-256\|screen-256'
+    set t_Co=256
+    colorscheme blackboard
+else
+    colorscheme darkblue
+endif
+
 set cursorline
 highlight cursorline guibg=#333333
 
