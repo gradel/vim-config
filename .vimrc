@@ -345,8 +345,15 @@ set wildmode=list:longest
 " Syntastic
 " =========
 
+let g:syntastic_auto_loc_list=1
+
+" python:
+
 " Available checkers: flake8 pyflakes pep8 pylint python
-let g:syntastic_python_checkers=['pyflakes']
+" Use flake8
+let g:syntastic_python_checkers = ['flake8']
+let g:syntastic_python_flake8_args = '--ignore="E401,E501,E701,E241,E126,E127,E128"'
+
 
 " =========
 " vim-notes
