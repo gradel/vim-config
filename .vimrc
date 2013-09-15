@@ -53,7 +53,6 @@
     Bundle 'matchit.zip'
     Bundle 'gregsexton/MatchTag'
     Bundle 'itspriddle/vim-jquery'
-    Bundle 'klen/python-mode'
     Bundle 'kchmck/vim-coffee-script'
     Bundle 'Rykka/riv.vim'
     Bundle 'curist/ConqueTerm'
@@ -390,25 +389,6 @@ endif
 " Gundo
 " =====
 nnoremap <leader>gu :GundoToggle<CR>
-
-" =======
-" python-mode
-" =======
-
-" Rope AutoComplete
-let g:pymode_lint_checker = "pyflakes,mccabe"
-let g:ropevim_vim_completion=0
-let g:ropevim_extended_complete=0
-"let g:pymode_rope_always_show_complete_menu = 1
-"let pymode_rope_autoimport_modules = ["os.*","traceback","django.*", "xml.etree", "abyss.*", "carrier.*", "magnet.*", "moonid.*", "payment.*"]
-let g:pymode_lint_cwindow = 1
-" Jump to the definition of whatever the cursor is on
-map <leader>j :RopeGotoDefinition<CR>
-let g:pymode_run_key='R'
-
-" Auto fix vim python paths if virtualenv enabled
-let g:pymode_virtualenv = 1
-
 
 " utl
 " ===
