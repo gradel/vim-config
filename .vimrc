@@ -450,20 +450,6 @@ if filereadable($VIRTUAL_ENV . '/.vimrc')
     source $VIRTUAL_ENV/.vimrc
 endif
 
-" ==================
-" ranger filemanager
-" ==================
-"
-fun! RangerChooser()
-  exec "silent !ranger --choosefile=/tmp/chosenfile " . expand("%:p:h")
-  if filereadable('/tmp/chosenfile')
-    exec 'edit ' . system('cat /tmp/chosenfile')
-    call system('rm /tmp/chosenfile')
-  endif
-  redraw!
-endfun
-map <leader>r :call RangerChooser()<CR>
-
 " ==============
 " local settings
 " ==============
