@@ -39,7 +39,6 @@
     Bundle 'vim-scripts/TaskList.vim'
     Bundle 'vim-scripts/writebackup'
     Bundle 'vim-scripts/utl.vim'
-    Bundle 'vim-scripts/buftabs'
     Bundle 'vim-scripts/CSApprox'
     Bundle 'mileszs/ack.vim'
     Bundle 'scrooloose/nerdtree'
@@ -59,9 +58,7 @@
     "Bundle 'lambdalisue/vim-django-support'
     Bundle 'ervandew/supertab'
     Bundle 'ivanov/vim-ipython'
-    Bundle 'Lokaltog/powerline'
-    "Bundle 'vim-scripts/AutoComplPop'
-    "Bundle 'gregsexton/gitv'
+    Bundle 'bling/vim-airline'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -78,7 +75,37 @@ set nocompatible               " be iMproved
 " ===================================
 " GENERAL SETTINGS
 " ===================================
+
+" ==========
+" virtualenv
+" ==========
 "
+" Add the virtualenv's site-packages to vim path
+"
+python << EOF
+import os.path
+import sys
+import vim
+if 'VIRTUAL_ENV' in os.environ:
+    project_base_dir = os.environ['VIRTUAL_ENV']
+    sys.path.insert(0, project_base_dir)
+    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
+    execfile(activate_this, dict(__file__=activate_this))
+EOF
+
+" Load up virtualenv's vimrc if it exists
+if filereadable($VIRTUAL_ENV . '/.vimrc')
+    source $VIRTUAL_ENV/.vimrc
+endif
+
+" ==============
+" local settings
+" ==============
+
+if filereadable(glob("~/.vimrc.local"))
+    source ~/.vimrc.local
+endif
+
 filetype plugin on
 filetype on
 syntax enable
@@ -148,14 +175,14 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
 "autocmd FileType c,cpp,java,php,ruby,python autocmd BufWritePre <buffer> :call <SID>StripTrailingWhitespaces()
 
-" =========
-" powerline
-" =========
+" ===========
+" vim-airline
+" ===========
 
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-
-" Always show statusline
+let g:airline_powerline_fonts = 1
 set laststatus=2
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#fnamemod = ':t'
 
 " ====
 " misc
@@ -427,34 +454,3 @@ au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 
 " compile on save
 au BufWritePost *.coffee silent CoffeeMake! -b | cwindow
-
-" ==========
-" virtualenv
-" ==========
-"
-" Add the virtualenv's site-packages to vim path
-"
-py << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
-
-" Load up virtualenv's vimrc if it exists
-if filereadable($VIRTUAL_ENV . '/.vimrc')
-    source $VIRTUAL_ENV/.vimrc
-endif
-
-" ==============
-" local settings
-" ==============
-
-if filereadable(glob("~/.vimrc.local"))
-    source ~/.vimrc.local
-endif
-
