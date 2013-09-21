@@ -59,6 +59,7 @@
     Bundle 'ervandew/supertab'
     Bundle 'ivanov/vim-ipython'
     Bundle 'bling/vim-airline'
+    Bundle 'vim-scripts/buftabs'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -181,8 +182,9 @@ autocmd InsertEnter * match ExtraWhitespace /\s\+\%#\@<!$/
 
 let g:airline_powerline_fonts = 1
 set laststatus=2
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
+" tabline prevents jedi completion popup display
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#fnamemod = ':t'
 
 " ====
 " misc
@@ -340,12 +342,12 @@ nmap N Nzz
 let g:jedi#use_tabs_not_buffers = 0
 
 let g:SuperTabDefaultCompletionType = "context"
-"let g:SuperTabContextDefaultCompletionType = ("<c-x><c-n>")
+let g:SuperTabContextDefaultCompletionType = ("<c-n>")
 
 "" Completion settings in insertmode
 set complete=.,w,b,t,i
 "" TODO
-set completeopt=menuone,longest,preview
+set completeopt=menu,longest,preview
 set pumheight=12
 
 let g:nodejs_complete_config = {
@@ -372,7 +374,7 @@ let g:syntastic_auto_loc_list=1
 " Available checkers: flake8 pyflakes pep8 pylint python
 " Use flake8
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args = '--ignore="E401,E501,E701,E241,E126,E127,E128"'
+let g:syntastic_python_flake8_args = '--ignore="W391,E401,F403,E501,E701,E241,E126,E127,E128"'
 
 " =======
 " tagbar
