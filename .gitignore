@@ -1,4 +1,11 @@
 bundle
 .*~
 *.swp
+# ignore vimoutliner stuff
+doc/
+filetype.vim
+ftdetect/
+ftplugin/
+syntax/
+vimoutliner/
 
