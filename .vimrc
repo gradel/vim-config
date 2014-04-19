@@ -19,9 +19,11 @@
     " My Bundles here:
     "
     " original repos on github
+    Bundle "jamessan/vim-gnupg"
     Bundle "waylan/vim-markdown-extra-preview"
     Bundle 'davidhalter/jedi-vim'
-    Bundle 'teramako/jscomplete-vim'
+    Bundle 'aereal/jscomplete-vim'
+    Bundle 'Shutnik/jshint2.vim'
     Bundle 'myhere/vim-nodejs-complete'
     Bundle 'pbrisbin/html-template-syntax'
     Bundle 'docunext/closetag.vim'
@@ -33,6 +35,7 @@
     Bundle 'xolox/vim-shell'
     Bundle 'tpope/vim-fugitive'
     Bundle 'tpope/vim-unimpaired'
+    Bundle 'tpope/vim-jdaddy'
     Bundle 'vim-scripts/L9'
     Bundle 'vim-scripts/mru.vim'
     Bundle 'vim-scripts/The-NERD-Commenter'
@@ -47,19 +50,18 @@
     Bundle 'kien/rainbow_parentheses.vim'
     Bundle 'kien/tabman.vim'
     Bundle 'sjl/gundo.vim'
-    Bundle 'mattn/zencoding-vim'
-    " XML/HTML tags navigation
     Bundle 'matchit.zip'
+    Bundle 'mattn/emmet-vim'
     Bundle 'gregsexton/MatchTag'
     Bundle 'itspriddle/vim-jquery'
     Bundle 'kchmck/vim-coffee-script'
     Bundle 'Rykka/riv.vim'
     Bundle 'curist/ConqueTerm'
-    "Bundle 'lambdalisue/vim-django-support'
     Bundle 'ervandew/supertab'
     Bundle 'ivanov/vim-ipython'
     Bundle 'bling/vim-airline'
     Bundle 'vim-scripts/buftabs'
+    Bundle 'jaxbot/github-issues.vim'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -76,6 +78,8 @@ set nocompatible               " be iMproved
 " ===================================
 " GENERAL SETTINGS
 " ===================================
+
+let g:github_access_token = "0409d8d2c7954e4f8729bd7aa3d09cdadff6740f"
 
 " ==========
 " virtualenv
@@ -350,6 +354,8 @@ set complete=.,w,b,t,i
 set completeopt=menu,longest,preview
 set pumheight=12
 
+" jscomplete
+
 let g:nodejs_complete_config = {
 \  'js_compl_fn': 'jscomplete#CompleteJS',
 \  'max_node_compl_len': 15
@@ -364,17 +370,30 @@ set wildmode=list:longest
 " ==============================================
 
 " =========
+" vim-gnupg
+" ========
+
+let g:GPGPreferArmor=1
+let g:GPGDefaultRecipients=["gerald@hien-online.de"]
+
+" =========
 " Syntastic
 " =========
 
 let g:syntastic_auto_loc_list=1
 
+" au BufRead *.js set makeprg=jslint\ %
+"
 " python:
 
 " Available checkers: flake8 pyflakes pep8 pylint python
 " Use flake8
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args = '--ignore="W391,E401,F403,E501,E701,E241,E126,E127,E128"'
+let g:syntastic_python_flake8_args = '--ignore="W391,E401,F403,E501,E701,E241,E126,E127,E128,E113,E265"'
+
+" jshint2
+"
+let jshint2_save = 1
 
 " =======
 " tagbar
@@ -441,12 +460,6 @@ nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
 " =======
 "
 let g:buftabs_only_basename=1
-
-" ==========
-" javascript
-" ==========
-"
-au BufRead *.js set makeprg=jslint\ %
 
 " ============
 " coffeescript
