@@ -21,7 +21,6 @@
     " original repos on github
     Bundle "waylan/vim-markdown-extra-preview"
     Bundle 'davidhalter/jedi-vim'
-    Bundle 'teramako/jscomplete-vim'
     Bundle 'myhere/vim-nodejs-complete'
     Bundle 'pbrisbin/html-template-syntax'
     Bundle 'docunext/closetag.vim'
@@ -40,7 +39,7 @@
     Bundle 'vim-scripts/writebackup'
     Bundle 'vim-scripts/utl.vim'
     Bundle 'vim-scripts/CSApprox'
-    Bundle 'mileszs/ack.vim'
+    "Bundle 'mileszs/ack.vim'
     Bundle 'scrooloose/nerdtree'
     Bundle 'scrooloose/syntastic'
     Bundle 'jistr/vim-nerdtree-tabs'
@@ -54,7 +53,6 @@
     Bundle 'itspriddle/vim-jquery'
     Bundle 'kchmck/vim-coffee-script'
     Bundle 'Rykka/riv.vim'
-    Bundle 'curist/ConqueTerm'
     "Bundle 'lambdalisue/vim-django-support'
     Bundle 'ervandew/supertab'
     Bundle 'ivanov/vim-ipython'
@@ -350,11 +348,6 @@ set complete=.,w,b,t,i
 set completeopt=menu,longest,preview
 set pumheight=12
 
-let g:nodejs_complete_config = {
-\  'js_compl_fn': 'jscomplete#CompleteJS',
-\  'max_node_compl_len': 15
-\}
-
 set wildmenu
 set wildignore+=*.pyc,*.zip,*.gz,*.bz,*.tar,*.jpg,*.png,*.gif,*.avi,*.wmv,*.ogg,*.mp3,*.mov
 set wildmode=list:longest
@@ -374,7 +367,7 @@ let g:syntastic_auto_loc_list=1
 " Available checkers: flake8 pyflakes pep8 pylint python
 " Use flake8
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args = '--ignore="W391,E401,F403,E501,E701,E241,E126,E127,E128"'
+let g:syntastic_python_flake8_args = '--ignore="W391,E401,F403,E501,E701,E126,E127,E128,E241,E265"'
 
 " =======
 " tagbar
@@ -446,7 +439,7 @@ let g:buftabs_only_basename=1
 " javascript
 " ==========
 "
-au BufRead *.js set makeprg=jslint\ %
+au BufRead *.js set makeprg=jshint\ %
 
 " ============
 " coffeescript
