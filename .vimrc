@@ -77,8 +77,6 @@ set nocompatible               " be iMproved
 " GENERAL SETTINGS
 " ===================================
 
-let g:github_access_token = "0409d8d2c7954e4f8729bd7aa3d09cdadff6740f"
-
 " ==========
 " virtualenv
 " ==========
@@ -472,4 +470,4 @@ au BufRead *.js set makeprg=jshint\ %
 au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 
 " compile on save
-au BufWritePost *.coffee silent CoffeeMake! -b | cwindow
+au BufWritePost *.coffee silent make!
