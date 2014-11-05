@@ -54,10 +54,6 @@
     Bundle 'gregsexton/MatchTag'
     Bundle 'itspriddle/vim-jquery'
     Bundle 'kchmck/vim-coffee-script'
-    Bundle 'Rykka/riv.vim'
-    Bundle "Rykka/clickable.vim"
-    Bundle "Rykka/clickable-things"
-    Bundle "Rykka/os.vim"
     Bundle 'ervandew/supertab'
     Bundle 'ivanov/vim-ipython'
     Bundle 'bling/vim-airline'
