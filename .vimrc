@@ -55,11 +55,15 @@
     Bundle 'itspriddle/vim-jquery'
     Bundle 'kchmck/vim-coffee-script'
     Bundle 'Rykka/riv.vim'
+    Bundle "Rykka/clickable.vim"
+    Bundle "Rykka/clickable-things"
+    Bundle "Rykka/os.vim"
     Bundle 'ervandew/supertab'
     Bundle 'ivanov/vim-ipython'
     Bundle 'bling/vim-airline'
     Bundle 'vim-scripts/buftabs'
     Bundle 'jaxbot/github-issues.vim'
+    Bundle 'vimoutliner/vimoutliner'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
