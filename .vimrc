@@ -387,10 +387,6 @@ let g:syntastic_auto_loc_list=1
 let g:syntastic_python_checkers = ['flake8']
 let g:syntastic_python_flake8_args = '--ignore="W391,E401,F403,E501,E701,E241,E126,E127,E128,E113,E265"'
 
-" jshint2
-"
-let jshint2_save = 1
-
 " =======
 " tagbar
 " =======
@@ -462,6 +458,8 @@ let g:buftabs_only_basename=1
 " ==========
 "
 au BufRead *.js set makeprg=jshint\ %
+let jshint2_save = 1
+
 
 " ============
 " coffeescript
