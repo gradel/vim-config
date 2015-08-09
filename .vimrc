@@ -469,3 +469,10 @@ au BufNewFile,BufReadPost *.coffee setl shiftwidth=2 expandtab
 
 " compile on save
 au BufWritePost *.coffee silent make!
+
+" ==========
+" make files
+" =========
+"
+autocmd filetype make setlocal noexpandtab
+autocmd filetype make setlocal nosmarttab
