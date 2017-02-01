@@ -20,7 +20,6 @@
     "
     " original repos on github
     Bundle "jamessan/vim-gnupg"
-    Bundle "waylan/vim-markdown-extra-preview"
     Bundle 'davidhalter/jedi-vim'
     Bundle 'aereal/jscomplete-vim'
     Bundle 'Shutnik/jshint2.vim'
@@ -32,7 +31,7 @@
     Bundle 'xolox/vim-misc'
     Bundle 'xolox/vim-notes'
     Bundle 'xolox/vim-pyref'
-    Bundle 'xolox/vim-shell'
+    "Bundle 'xolox/vim-shell'
     Bundle 'tpope/vim-fugitive'
     Bundle 'tpope/vim-unimpaired'
     Bundle 'tpope/vim-jdaddy'
@@ -60,6 +59,7 @@
     Bundle 'vim-scripts/buftabs'
     Bundle 'jaxbot/github-issues.vim'
     Bundle 'vimoutliner/vimoutliner'
+    Bundle 'vimwiki/vimwiki'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -112,6 +112,7 @@ filetype on
 syntax enable
 syntax on
 let python_highlight_all = 1
+let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_tags': 1}]
 set title
 set nocompatible
 set autoread
@@ -205,6 +206,7 @@ cmap <leader>p <C-R>+
 vnoremap <leader>y "+y
 
 nmap <leader><leader> viw"+yviw
+nmap <leader><leader><leader> "+y
 
 " ===============
 " quickfix window
@@ -385,7 +387,7 @@ let g:syntastic_auto_loc_list=1
 " Available checkers: flake8 pyflakes pep8 pylint python
 " Use flake8
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args = '--ignore="W391,E401,F403,E501,E701,E241,E126,E127,E128,E113,E265"'
+let g:syntastic_python_flake8_args = '--ignore="W391,W503,E401,F403,E501,E701,E241,E126,E127,E128,E113,E265"'
 
 " =======
 " tagbar
