@@ -29,6 +29,8 @@
     Bundle 'majutsushi/tagbar'
     Bundle 'suan/vim-instant-markdown'
     Bundle 'xolox/vim-misc'
+    Bundle 'Rykka/riv.vim'
+    Bundle 'Rykka/InstantRst'
     Bundle 'xolox/vim-notes'
     Bundle 'xolox/vim-pyref'
     "Bundle 'xolox/vim-shell'
@@ -43,13 +45,14 @@
     Bundle 'vim-scripts/utl.vim'
     Bundle 'vim-scripts/CSApprox'
     Bundle 'scrooloose/nerdtree'
-    Bundle 'scrooloose/syntastic'
+    Bundle 'vim-syntastic/syntastic'
     Bundle 'jistr/vim-nerdtree-tabs'
     Bundle 'kien/rainbow_parentheses.vim'
     Bundle 'kien/tabman.vim'
     Bundle 'sjl/gundo.vim'
     Bundle 'matchit.zip'
     Bundle 'mattn/emmet-vim'
+    Bundle 'mattn/calendar-vim'
     Bundle 'gregsexton/MatchTag'
     Bundle 'itspriddle/vim-jquery'
     Bundle 'kchmck/vim-coffee-script'
@@ -57,9 +60,8 @@
     Bundle 'ivanov/vim-ipython'
     Bundle 'bling/vim-airline'
     Bundle 'vim-scripts/buftabs'
-    Bundle 'jaxbot/github-issues.vim'
     Bundle 'vimoutliner/vimoutliner'
-    Bundle 'vimwiki/vimwiki'
+    "Bundle 'vimwiki/vimwiki'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -77,28 +79,6 @@ set nocompatible               " be iMproved
 " GENERAL SETTINGS
 " ===================================
 
-" ==========
-" virtualenv
-" ==========
-"
-" Add the virtualenv's site-packages to vim path
-"
-python << EOF
-import os.path
-import sys
-import vim
-if 'VIRTUAL_ENV' in os.environ:
-    project_base_dir = os.environ['VIRTUAL_ENV']
-    sys.path.insert(0, project_base_dir)
-    activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-    execfile(activate_this, dict(__file__=activate_this))
-EOF
-
-" Load up virtualenv's vimrc if it exists
-if filereadable($VIRTUAL_ENV . '/.vimrc')
-    source $VIRTUAL_ENV/.vimrc
-endif
-
 " ==============
 " local settings
 " ==============
@@ -112,7 +92,6 @@ filetype on
 syntax enable
 syntax on
 let python_highlight_all = 1
-let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_tags': 1}]
 set title
 set nocompatible
 set autoread
@@ -144,9 +123,14 @@ set enc=utf-8
 
 imap jj <esc>
 
-map <leader>a :exec "Ggrep ".expand("<cword>")<cr>
-
 let wordUnderCursor = expand("<cword>")
+
+" ===============
+" leader commands
+" ===============
+"
+map <leader>a :exec "Ggrep ".expand("<cword>")<cr>
+" map <leader>a  viw"+yviw <esc> :Ggrep <leader>p <cr>
 
 " =============
 " simple saving
@@ -154,6 +138,42 @@ let wordUnderCursor = expand("<cword>")
 "
 nmap <leader>m :w<CR>
 imap <leader>m <Esc>:w<CR>
+
+nnoremap <Leader>o :Open<CR>
+map <leader>w :set wrap<cr>
+
+" ==============
+" copy and paste
+" ==============
+"
+map <leader>p "+p
+cmap <leader>p <C-R>+
+vnoremap <leader>y "+y
+
+nmap <leader><leader> viw"+yviw
+" nmap <leader><leader><leader> "*y
+
+" ===============
+" quickfix window
+" ===============
+"
+" open/close the quickfix window
+nmap <leader>f :copen<CR>
+nmap <leader>fc :cclose<CR>
+
+" disable search highlighting til next search
+nnoremap <silent> <leader>h :noh<CR><C-l>
+
+map <leader>tl :TagbarToggle<CR>
+map <leader>td <Plug>TaskList
+
+map <leader>nt :NERDTreeMirrorToggle<cr>
+map <leader>tt :NERDTreeTabsToggle<cr>
+
+" =====
+" Gundo
+" =====
+nnoremap <leader>gu :GundoToggle<CR>
 
 " ========================
 " show trailing whitespace
@@ -193,28 +213,6 @@ set laststatus=2
 "
 " add < > to chars that form pairs (see % command)
 set matchpairs+=<:>
-
-nnoremap <Leader>o :Open<CR>
-map <leader>w :set wrap<cr>
-
-" ==============
-" copy and paste
-" ==============
-"
-map <leader>p "+p
-cmap <leader>p <C-R>+
-vnoremap <leader>y "+y
-
-nmap <leader><leader> viw"+yviw
-nmap <leader><leader><leader> "+y
-
-" ===============
-" quickfix window
-" ===============
-"
-" open/close the quickfix window
-nmap <leader>f :copen<CR>
-nmap <leader>fc :cclose<CR>
 
 " close preview window automatically when we move around
 "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
@@ -329,8 +327,6 @@ set hlsearch
 set ignorecase
 set smartcase
 set incsearch
-" disable search highlighting til next search
-nnoremap <silent> <leader>h :noh<CR><C-l>
 
 " center search
 nmap n nzz
@@ -387,7 +383,7 @@ let g:syntastic_auto_loc_list=1
 " Available checkers: flake8 pyflakes pep8 pylint python
 " Use flake8
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args = '--ignore="W391,W503,E401,F403,E501,E701,E241,E126,E127,E128,E113,E265"'
+let g:syntastic_python_flake8_args = '--ignore="W391,W503,E401,F403,E501,E701,E722,E241,E126,E127,E128,E113,E265"'
 
 " =======
 " tagbar
@@ -396,21 +392,15 @@ let g:syntastic_python_flake8_args = '--ignore="W391,W503,E401,F403,E501,E701,E2
 let g:tagbar_autoshowtag = 1
 let g:tagbar_width = 35
 
-map <leader>tl :TagbarToggle<CR>
-
 " ========
 " TaskList
 " ========
 "
-map <leader>td <Plug>TaskList
 let g:tlTokenList = ['FIX', 'todo', 'ToDo', 'TODO', 'XX']
 
 " =========================
 " NerdTree and NerdTreeTabs
 " ========================
-"
-map <leader>nt :NERDTreeMirrorToggle<cr>
-map <leader>tt :NERDTreeTabsToggle<cr>
 "
 let g:NERDTreeWinSize=25
 let g:nerdtree_tabs_open_on_gui_startup = 0
@@ -420,35 +410,41 @@ let g:nerdtree_tabs_open_on_gui_startup = 0
 " ========
 "
 if has ("autocmd")
-autocmd User fugitive if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnoremap <buffer> .. :edit %:h<CR> endif
+    autocmd User fugitive if fugitive#buffer().type() =~# '^\%(tree\|blob\)$' | nnoremap <buffer> .. :edit %:h<CR> endif
 "autocmd BufReadPost fugitive://* set bufhidden=delete
 endif
 
-" =====
-" Gundo
-" =====
-nnoremap <leader>gu :GundoToggle<CR>
-
-" utl
+" ===
+" Utl
 " ===
 "
-" systems http client
-let g:utl_cfg_hdl_scm_http_system = "!xdg-open %u"
-" let g:utl_cfg_hdl_scm_http_system = "silent !firefox -remote 'ping()' && firefox -remote 'openURL( %u#%f )' || firefox '%u#%f' &"
-" pdf handler
-let g:utl_cfg_hdl_mt_application_pdf = ':silent !evince %p &'
-" mailto handler
+" the use of silent clears my vim screen. Look also here:
+" https://vi.stackexchange.com/questions/2809/silent-makes-my-vim-go-blank
+" and :h :silent. CTRL-L has no effect (on my machine).
+"
+" handlers
+"
+let g:utl_cfg_hdl_mt_generic = "!xdg-open %p &"
 let g:utl_cfg_hdl_scm_mailto = "silent !thunderbird '%u' &"
-"
-"nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
-"nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
-" [id=utl_cfg_hdl_scm_http__wget]
-"let g:utl_cfg_hdl_scm_http__wget="call Utl_if_hdl_scm_http__wget('%u')"
-"
-nmap <leader>l :Utl ol<cr>
+let g:utl_cfg_hdl_scm_http_system = "!firefox -remote 'ping()' && firefox -remote 'openURL( %u )' || firefox '%u#%f' &"
 nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
 nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
-
+" [id=utl_cfg_hdl_scm_http__wget]
+"let g:utl_cfg_hdl_scm_http__wget="call Utl_if_hdl_scm_http__wget('%u')"
+" pdf handler
+" let g:utl_cfg_hdl_mt_application_pdf = '!evince %p &'
+"
+"
+" mappings
+"
+nmap <leader>l :Utl<cr>
+nmap <Leader>uhs :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http_system<cr>
+nmap <Leader>uhw :let g:utl_cfg_hdl_scm_http=g:utl_cfg_hdl_scm_http__wget<cr>
+"
+" debug: 1
+"
+let utl_opt_verbose=0
+"
 " =======
 " buftabs
 " =======
@@ -476,5 +472,78 @@ au BufWritePost *.coffee silent make!
 " make files
 " =========
 "
-autocmd filetype make setlocal noexpandtab
-autocmd filetype make setlocal nosmarttab
+if has ("autocmd")
+    autocmd filetype make setlocal noexpandtab
+    autocmd filetype make setlocal nosmarttab
+endif
+
+" ======================
+" restructured text reST
+" ======================
+"
+augroup filetypedetect_rst
+    au!
+    " Headings
+    au FileType rst nnoremap <leader>h1 ^yypv$r=o<cr><esc>
+    au FileType rst inoremap <leader>h1 <esc>^yypv$r=o<cr>
+
+    au FileType rst nnoremap <leader>h2 ^yypv$r-o<cr><cr><cr><cr><cr><cr><esc>kkkk
+    au FileType rst inoremap <leader>h2 <esc>^yypv$r-o<cr><cr><cr><cr><cr><cr><esc>kkkki
+
+    au FileType rst nnoremap <leader>h3 ^yypv$r+o<cr><cr><cr><cr><cr><cr><esc>kkkk
+    au FileType rst inoremap <leader>h3 <esc>^yypv$r+o<cr><cr><cr><cr><cr><cr><esc>kkkki
+
+    au FileType rst nnoremap <leader>h4 ^yypv$r~o<cr><cr><cr><cr><cr><cr><esc>kkkk
+    au FileType rst inoremap <leader>h4 <esc>^yypv$r~o<cr><cr><cr><cr><cr><cr><esc>kkkki
+
+    au FileType rst nnoremap <leader>h5 ^yypv$r*o<cr><cr><cr><cr><cr><cr><esc>kkkk
+    au FileType rst inoremap <leader>h5 <esc>^yypv$r*o<cr><cr><cr><cr><cr><cr><esc>kkkki
+    "
+    """Make Link (ml)
+    " Highlight a word or phrase and it creates a link and opens a split so
+    " you can edit the url separately. Once you are done editing the link,
+    " simply close that split.
+    au FileType rst vnoremap <leader>cl yi`<esc>gvvlli`_<esc>:vsplit<cr><C-W>l:$<cr>o<cr>.. _<esc>pA: http://TODO<esc>vb
+    """Make footnote (ml)
+    au FileType rst iabbrev mfn [#]_<esc>:vsplit<cr><C-W>l:$<cr>o<cr>.. [#] TODO
+    au FileType rst set spell
+    "Create image
+    au FileType rst iabbrev iii .. image:: TODO.png<cr>    :scale: 100<cr>:align: center<cr><esc>kkkeel
+    "Create figure
+    "au FileType rst iabbrev iif .. figure:: TODO.png<cr>    :scale: 100<cr>:align: center<cr>:alt: TODO<cr><cr><cr>Some brief description<esc>kkkeel
+
+    "Create note
+    au FileType rst iabbrev nnn .. note:: 
+    "Start or end bold text inline
+    au FileType rst inoremap <leader>bb **
+    "Start or end italicized text inline
+    au FileType rst inoremap <leader>ii *
+    "Start or end preformatted text inline
+    au FileType rst inoremap <leader>pf ``
+
+    " Fold settings
+    "au FileType rst set foldmethod=marker
+
+    " Admonitions
+    au FileType rst iabbrev adw .. warning::
+    au FileType rst iabbrev adn .. note::
+augroup END
+
+" vim-wiki
+" let g:vimwiki_list = [{'path': '~/vimwiki/', 'auto_tags': 1}]
+
+""""""""""
+" calendar
+""""""""""
+"
+let g:calendar_monday = 1
+
+" inlude personal stuff
+if has ("autocmd")
+    try
+        source ~/.vim/custom-vimrc
+    catch
+    endtry
+endif
+
+let g:syntastic_rst_checkers = ['sphinx']
