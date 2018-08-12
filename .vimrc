@@ -62,6 +62,10 @@
     Bundle 'vim-scripts/buftabs'
     Bundle 'vimoutliner/vimoutliner'
     "Bundle 'vimwiki/vimwiki'
+    Bundle 'cakebaker/scss-syntax.vim'
+    Bundle 'hail2u/vim-css3-syntax'
+    Bundle 'gcorne/vim-sass-lint'
+    Bundle 'dbeniamine/cheat.sh-vim'
     if iCanHazVundle == 0
         echo "Installing Bundles, please ignore key map error messages"
         echo ""
@@ -234,6 +238,8 @@ set expandtab
 set shiftround
 set smarttab
 
+autocmd FileType scss setlocal shiftwidth=2 softtabstop=2
+
 " ================================================
 " FOLDING OPTIONS
 " ================================================
@@ -376,6 +382,11 @@ let g:GPGDefaultRecipients=["gerald@hien-online.de"]
 
 let g:syntastic_auto_loc_list=1
 
+" scss
+"
+let g:syntastic_sass_checkers=["sasslint"]
+let g:syntastic_scss_checkers=["sasslint"]
+
 " au BufRead *.js set makeprg=jslint\ %
 "
 " python:
@@ -383,7 +394,7 @@ let g:syntastic_auto_loc_list=1
 " Available checkers: flake8 pyflakes pep8 pylint python
 " Use flake8
 let g:syntastic_python_checkers = ['flake8']
-let g:syntastic_python_flake8_args = '--ignore="W391,W503,E401,F403,E501,E701,E722,E241,E126,E127,E128,E113,E265"'
+let g:syntastic_python_flake8_args = '--ignore="W391,W503,E113,E116,E126,E127,E128,E241,E265,E401,F403,E501,E701,E722,"'
 
 " =======
 " tagbar
